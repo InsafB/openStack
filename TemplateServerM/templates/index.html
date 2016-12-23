@@ -25,7 +25,11 @@
       <input type="password" placeholder="Passowrd" />
       <br /><br />
       <input title="login" type="submit" value="Login" />
-      <br /><br />
+      <br />
+      {% if error %}
+      <p class=error><strong>Error:</strong> {{ error }}
+      {% endif %}
+      <br />
     </form>
   </div>
    <div class="login-form">
