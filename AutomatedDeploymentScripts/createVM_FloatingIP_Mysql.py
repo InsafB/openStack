@@ -5,28 +5,8 @@ from novaclient.client import Client
 import os
 import paramiko
 import credentials
+import utils
 
-
-def get_nova_credentials_v2():
-    d = {}
-    d['version'] = '2'
-    d['username'] = os.environ['OS_USERNAME']
-    d['password'] = os.environ['OS_PASSWORD']
-    d['auth_url'] = os.environ['OS_AUTH_URL']
-    d['project_id'] = os.environ['OS_PROJECT_ID']
-    d['project_name']= os.environ['OS_PROJECT_NAME']
-    d['domain_name']= os.environ['OS_USER_DOMAIN_NAME']
-    return d
-
-def print_values_ip(ip_list):
-    ip_dict_lisl = []
-    for ip in ip_list:
-        print("-"*35)
-        print("fixed_ip : %s" % ip.fixed_ip)
-        print("id : %s" % ip.id)
-        print("instance_id : %s" % ip.instance_id)
-        print("ip : %s" % ip.ip)
-        print("pool : %s" % ip.pool)
 
 def exec_commands(commands,server):
     client = paramiko.SSHClient()
