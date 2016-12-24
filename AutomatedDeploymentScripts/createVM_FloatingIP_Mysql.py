@@ -34,7 +34,7 @@ def getNovaClient():
     nova_client = os_client_config.make_client('compute',**credentials)
     return nova_client
 
-def createVM(letter,network_id):
+def createVM(name,network_id):
     novaclient = getNovaClient()
     ## Initiate Vm parameters 
     image = nova_client.images.find(name="ubuntu1404")
@@ -42,7 +42,7 @@ def createVM(letter,network_id):
     net = nova_client.networks.find(id=network_id)
     nics = [{'net-id': net.id}]
     ## Create Vm
-    ServerName = "Server"+letter
+    ServerName = "Server"+name
     instance = nova_client.servers.create(name=ServerName, image=image,flavor=flavor, key_name="key_mac", nics=nics)
     appendHost(instance.to_dict()['addresses']['private'][0]['addr'],ServerName)
     return instance,ServerName
