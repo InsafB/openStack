@@ -83,8 +83,9 @@ def createVM_W():
 
 
 ## Main
-router_id = createRouter()
 network_id = createNetwork()
+router_id = createRouter()
+
 
 createVM_Master(network_id)
 createVM_I()
