@@ -38,36 +38,76 @@ def exec_commands(commands,server):
         exit_status = client_stdout.channel.recv_exit_status()
         print "exit status for command '",cmd," is : ",exit_status
 
+def appendHost(ip,ServerName):
+    command = "echo '"+ip+"    "+ServerName+"' >> /etc/hosts"
+    commands = [command]
+    exec_commands(commands,ServerName)
+
 def install_mysql(server):
     commands=["sudo apt-get update","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password othmane'","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password othmane'","sudo apt-get -y install mysql-server"]
     exec_commands(commands,server)
 
-## Nova Client
-credentials = get_nova_credentials_v2()
-#First way (don't know why it doesn't work) 
-#nova_client = Client(**credentials)
-#Second way
-nova_client = os_client_config.make_client('compute',**credentials)
+def getNovaClient():
+    ## Nova Client
+    credentials = get_nova_credentials_v2()
+    nova_client = os_client_config.make_client('compute',**credentials)
+    return nova_client
+
+def createVM(letter,network_id):
+    novaclient = getNovaClient()
+    ## Initiate Vm parameters 
+    image = nova_client.images.find(name="ubuntu1404")
+    flavor = nova_client.flavors.find(name="m1.small")
+    net = nova_client.networks.find(id=network_id)
+    nics = [{'net-id': net.id}]
+    ## Create Vm
+    ServerName = "Server"+letter
+    instance = nova_client.servers.create(name=ServerName, image=image,flavor=flavor, key_name="key_mac", nics=nics)
+    appendHost(instance.to_dict()['addresses']['private'][0]['addr'],ServerName)
+    return instance,ServerName
+
+def link_VM_FloatingIP(network_id,ServerName):
+    nova_client = getNovaClient()
+    ##Ask for a floating IP
+    #floating_ip = nova_client.floating_ips.create(nova_client.floating_ip_pools.list()[0].name)
+    #link with an existing ip ( already created)
+    floating_ip = nova_client.floating_ips.find(id=network_id)
+    instance = nova_client.servers.find(name=ServerName)
+    instance.add_floating_ip(floating_ip)
 
 
-## Initiate Vm parameters 
-image = nova_client.images.find(name="ubuntu1404")
-flavor = nova_client.flavors.find(name="m1.small")
-net = nova_client.networks.find(id="473a05e9-f592-4c73-923f-b1127a007043")
-nics = [{'net-id': net.id}]
-## Create Vm
-ServerName = "Server"+str(1)
-instance = nova_client.servers.create(name=ServerName, image=image,flavor=flavor, key_name="key_mac", nics=nics)
+def createVM_Master(network_id):
+    nstance , ServerName = createVM("Master")
+    link_VM_FloatingIP(network_id,ServerName)
 
-##Ask for a floating IP
-#floating_ip = nova_client.floating_ips.create(nova_client.floating_ip_pools.list()[0].name)
+def createVM_I():
+    instance , ServerName =createVM("I")
+    install_mysql(ServerName)
 
-#link with an existing ip ( already created)
-floating_ip = nova_client.floating_ips.find(id='c62cc884-f9ca-4748-be68-347afcf6ab87')
-instance = nova_client.servers.find(name=ServerName)
-instance.add_floating_ip(floating_ip)
+def createVM_S():
+    instance , ServerName =createVM("S")
+    install_mysql(ServerName)
 
-## Install Mysql Example
-install_mysql('10.11.50.71') 
+def createVM_B():
+    nstance , ServerName = createVM("B")
+    link_VM_Swift(ServerName)
+
+def createVM_P():
+    nstance , ServerName = createVM("P")
+    link_VM_Swift(ServerName)
+
+def createVM_W():
+    nstance , ServerName = createVM("W")
+   
 
 
+## Main
+router_id = createRouter()
+network_id = createNetwork()
+
+createVM_Master(network_id)
+createVM_I()
+createVM_S()
+createVM_B()
+createVM_P()
+createVM_W()
