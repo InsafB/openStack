@@ -4,6 +4,7 @@ import keystoneclient.v2_0.client as ksclient
 from novaclient.client import Client
 import os
 import paramiko
+import credentials
 
 
 def get_nova_credentials_v2():
