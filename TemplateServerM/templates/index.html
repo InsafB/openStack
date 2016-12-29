@@ -2,56 +2,62 @@
 <html >
 <head>
   <meta charset="UTF-8">
-  <title>Flat login form</title>
-  
+  <title>Promotional lottery</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-
-  
-      <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}">
-
-  
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
   <div class="login-container">
   <div class="login-header">
-    <h1 title="login">Login</h1>
+    <h1 title="login">Identification</h1>
     <p title="close">x</p>
   </div>
+
   <div class="login-form">
-    <form>
-      <input type="text" placeholder="Username" />
-      <br /><br />
-      <input type="password" placeholder="Passowrd" />
-      <br /><br />
-      <input title="login" type="submit" value="Login" />
-      <br />
-      {% if error %}
-      <p class=error><strong>Error:</strong> {{ error }}
-      {% endif %}
-      <br />
-    </form>
+    {% if id is not defined %}
+    <p No ID provided />
+    <br /><br />
+    {% if error is not none %}
+    <p Invalid ID />
+    <br /><br />
+    {% else %}
+    <p ID: {{ id }} />
+    <br /><br />
+    <p First name: {{ firstname }} />
+    <br /><br />
+    <p Last name: {{ lastname }} />
+    <br /><br />
+    <p Email: {{ email }}/>
+    <br /><br />
+    {% endif %}
   </div>
-   <div class="login-form">
+
+  <div class="login-form">
     <br /><br />
     <h1>Service S</h1>
+    {% if not state %}
+    <p You have not played so far />
     <br /><br />
+    {% else %}
+    <p You have already played at {{ time }} />
+    <br /><br />
+    {% endif %}
   </div>
-   <div class="login-form">
+
+  <div class="login-form">
     <form>
       <h1>Service B</h1>
       <input type="button" value="Play" />
       <br /><br />
-      
     </form>
   </div>
-   <div class="login-form">
+
+  <div class="login-form">
     <br /><br />
     <h1>Service P</h1>
     <br /><br />
   </div>
 </div>
-  
-
 </body>
 </html>
