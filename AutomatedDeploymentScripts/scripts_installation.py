@@ -8,10 +8,8 @@ import novaclient.v2.client as nvclient
 from novaclient.client import Client
 from neutronclient.v2_0 import client
 from swiftclient.client import Connection, ClientException
-from credentials import get_credentials
-from credentials import get_nova_credentials
-from credentials import get_nova_credentials_v2
-from utils import print_values_server
+from credentials import *
+from utils import *
 
 def exec_commands(commands,server):
     client = paramiko.SSHClient()
