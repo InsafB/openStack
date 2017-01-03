@@ -95,3 +95,4 @@ createVM_B()
 createVM_P()
 createVM_W()
 
+createSwift_store()
