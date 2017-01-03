@@ -1,11 +1,17 @@
 import os_client_config
-import glanceclient.v2.client as glclient
-import keystoneclient.v2_0.client as ksclient
-from novaclient.client import Client
-from swiftclient.client import Connection, ClientException
 import os
 import paramiko
 import credentials
+import glanceclient.v2.client as glclient
+import keystoneclient.v2_0.client as ksclient
+import novaclient.v2.client as nvclient
+from novaclient.client import Client
+from neutronclient.v2_0 import client
+from swiftclient.client import Connection, ClientException
+from credentials import get_credentials
+from credentials import get_nova_credentials
+from credentials import get_nova_credentials_v2
+from utils import print_values_server
 
 def exec_commands(commands,server):
     client = paramiko.SSHClient()
@@ -38,12 +44,12 @@ def getSwiftConn():
 
 def createVM(name,network_id):
     novaclient = getNovaClient()
-    ## Initiate Vm parameters 
+    ## Initiate VM parameters 
     image = nova_client.images.find(name="ubuntu1404")
     flavor = nova_client.flavors.find(name="m1.small")
     net = nova_client.networks.find(id=network_id)
     nics = [{'net-id': net.id}]
-    ## Create Vm
+    ## Create VM
     ServerName = "Server"+name
     instance = nova_client.servers.create(name=ServerName, image=image,flavor=flavor, key_name="key_mac", nics=nics)
     appendHost(instance.to_dict()['addresses']['private'][0]['addr'],ServerName)
@@ -58,9 +64,8 @@ def link_VM_FloatingIP(network_id,ServerName):
     instance = nova_client.servers.find(name=ServerName)
     instance.add_floating_ip(floating_ip)
 
-
 def createVM_Master(network_id):
-    nstance , ServerName = createVM("Master")
+    instance , ServerName = createVM("Master")
     link_VM_FloatingIP(network_id,ServerName)
 
 def createVM_I():
@@ -72,17 +77,47 @@ def createVM_S():
     install_mysql(ServerName)
 
 def createVM_B():
-    nstance , ServerName = createVM("B")
+    instance , ServerName = createVM("B")
     link_VM_Swift(ServerName)
 
 def createVM_P():
-    nstance , ServerName = createVM("P")
+    instance , ServerName = createVM("P")
     link_VM_Swift(ServerName)
 
 def createVM_W():
-    nstance , ServerName = createVM("W")
-   
+    instance , ServerName = createVM("W")
+    
+def createNetwork():
+    credentials = get_credentials()
+    neutron = client.Client(**credentials)
+	network1_name = 'private_network1'
+	try:	
+		body_create_network1 = {'network': {'name': network1_name,'admin_state_up': True}}
+		network1 = neutron.create_network(body=body_create_network1)
+		network1_dict = network1['network']
+		network1_id = network1_dict['id']
+		print('Network %s has been successfuly created' % network1_id)
+		body_create_subnet1 = {'subnets': [{'cidr': '192.168.0.0/24','ip_version': 4, 'network_id': network1_id}]}
+		subnet1 = neutron.create_subnet(body=body_create_subnet1)
+		print('SubNetwork %s has been successfuly created' % subnet1)
+	finally:
+		print("Create Network: Execution completed")
+	return network1_id    
 
+def createRouter():
+	neutron = client.Client(**credentials)
+	neutron.format = 'json'
+	request = {'router': {'name': 'router1','admin_state_up': True}}
+	router = neutron.create_router(request)
+	router1_id = router['router']['id']
+	print("Create Router: Execution Completed")
+	return router1_id
+
+def createPort()
+	body_create_port1 = {'port': {'admin_state_up': True,'device_id': router1_id,'name': 'port1','network_id': network1_id}}
+	response = neutron.create_port(body=body_create_port1)
+	print(response)
+	print("Add Port to Network: Execution Completed")
 
 ## Main 
 router_id = createRouter()
