@@ -18,6 +18,15 @@ def get_nova_credentials_v2():
     d['domain_name']= os.environ['OS_USER_DOMAIN_NAME']
     return d
 
+def get_session_credentials():
+    d = {}
+    d['auth_version'] = '3'
+    d['user'] = os.environ['OS_USERNAME']
+    d['key'] = os.environ['OS_PASSWORD']
+    d['authurl'] = os.environ['OS_AUTH_URL']
+    d['os_options'] = {'user_domain_id': 'Default','project_domain_id': 'Default','project_name': os.environ['OS_PROJECT_NAME']}
+    return d
+
 
 def get_nova_credentials():
     d = {}
