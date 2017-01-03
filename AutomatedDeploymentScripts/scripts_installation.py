@@ -4,8 +4,6 @@ import paramiko
 import credentials
 import glanceclient.v2.client as glclient
 import keystoneclient.v2_0.client as ksclient
-import novaclient.v2.client as nvclient
-from novaclient.client import Client
 from neutronclient.v2_0 import client
 from swiftclient.client import Connection, ClientException
 from credentials import *
