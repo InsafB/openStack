@@ -7,17 +7,38 @@ app = Flask(__name__)
 db = MySQLdb.connect(host="localhost", user="root", passwd="", db="test")
 cur = db.cursor()
 
-@app.route('/<int:id>')
-def status():
-    state = None
-    user_id = id
-    cur.execute("SELECT COUNT(1) FROM played WHERE id = %d;", [user_id])
-    # if id not found
-    if not cur.fetchone()[0]:
-        return render_template('index.html', state=False)
-    else:
-        cur.execute("SELECT time FROM played WHERE id = %d;", [user_id])            
-        return render_template('index.html', state=True, time=cur[1][0])
+from flask import Flask
+from flask import request
+import socket
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+app = Flask(__name__)
+
+@app.route("/",methods=['GET', 'POST'])
+def scanUser():
+    user_id = request.args.get('user_id')
+    if lookupUser(user_id):
+        return True
+    else:
+        return False
+
+def lookupUser(user_id):
+    with open('status.csv', 'r') as File:
+        for line in File:
+            if user_id == line:
+                return True
+        return False
+
+@app.route("/save",methods=['GET', 'POST'])
+def lookupUser():
+    user_id = request.args.get('user_id')
+    with open('status.csv', 'a') as File:
+        File.write(user_id+"\n")
+    return True
+
+
+        
+
+if __name__ == "__main__":
+
+    app.run(host = socket.gethostbyname(socket.gethostname()))
