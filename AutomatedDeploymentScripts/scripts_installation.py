@@ -2,12 +2,41 @@ import os_client_config
 import os
 import paramiko
 import credentials
-import glanceclient.v2.client as glclient
-import keystoneclient.v2_0.client as ksclient
 from neutronclient.v2_0 import client
 from swiftclient.client import Connection, ClientException
 from credentials import *
 from utils import *
+
+def createNetwork(network_name):
+    credentials = get_credentials()
+    neutron = client.Client(**credentials)
+	try:	
+		body_create_network = {'network': {'name': network_name,'admin_state_up': True}}
+		network = neutron.create_network(body=body_create_network)
+		network_dict = network['network']
+		network_id = network_dict['id']
+		print('Network %s has been successfuly created' % network_id)
+		body_create_subnet = {'subnets': [{'cidr': '192.168.0.0/24','ip_version': 4, 'network_id': network_id}]}
+		subnet = neutron.create_subnet(body=body_create_subnet)
+		print('SubNetwork %s has been successfuly created' % subnet)
+	finally:
+		print("Create Network: Execution completed")
+	return network_id 
+
+def createRouter(router_name):
+	neutron = client.Client(**credentials)
+	neutron.format = 'json'
+	request = {'router': {'name': router_name,'admin_state_up': True}}
+	router = neutron.create_router(request)
+	router_id = router['router']['id']
+	print("Create Router: Execution Completed")
+	return router_id
+
+def createPort(port_name,router_id,network_id)
+	body_create_port = {'port': {'admin_state_up': True,'device_id': router_id,'name': port_name,'network_id': network_id}}
+	response = neutron.create_port(body=body_create_port)
+	print(response)
+	print("Add Port to Network: Execution Completed")
 
 def exec_commands(commands,server):
     client = paramiko.SSHClient()
@@ -74,50 +103,17 @@ def createVM_S():
 
 def createVM_B():
     instance , ServerName = createVM("B")
-    link_VM_Swift(ServerName)
 
 def createVM_P():
     instance , ServerName = createVM("P")
-    link_VM_Swift(ServerName)
 
 def createVM_W():
     instance , ServerName = createVM("W")
-    
-def createNetwork():
-    credentials = get_credentials()
-    neutron = client.Client(**credentials)
-	network1_name = 'private_network1'
-	try:	
-		body_create_network1 = {'network': {'name': network1_name,'admin_state_up': True}}
-		network1 = neutron.create_network(body=body_create_network1)
-		network1_dict = network1['network']
-		network1_id = network1_dict['id']
-		print('Network %s has been successfuly created' % network1_id)
-		body_create_subnet1 = {'subnets': [{'cidr': '192.168.0.0/24','ip_version': 4, 'network_id': network1_id}]}
-		subnet1 = neutron.create_subnet(body=body_create_subnet1)
-		print('SubNetwork %s has been successfuly created' % subnet1)
-	finally:
-		print("Create Network: Execution completed")
-	return network1_id    
-
-def createRouter():
-	neutron = client.Client(**credentials)
-	neutron.format = 'json'
-	request = {'router': {'name': 'router1','admin_state_up': True}}
-	router = neutron.create_router(request)
-	router1_id = router['router']['id']
-	print("Create Router: Execution Completed")
-	return router1_id
-
-def createPort()
-	body_create_port1 = {'port': {'admin_state_up': True,'device_id': router1_id,'name': 'port1','network_id': network1_id}}
-	response = neutron.create_port(body=body_create_port1)
-	print(response)
-	print("Add Port to Network: Execution Completed")
-
+       
 ## Main 
-router_id = createRouter()
-network_id = createNetwork()
+network_id = createNetwork('private_network1')
+router_id = createRouter('router1')
+createPort('port1',router_id, network_id)
 
 createVM_Master(network_id)
 createVM_I()
