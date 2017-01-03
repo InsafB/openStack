@@ -5,6 +5,7 @@ from novaclient.client import Client
 from swiftclient.client import Connection, ClientException
 import os
 import paramiko
+import credentials
 
 def exec_commands(commands,server):
     client = paramiko.SSHClient()
