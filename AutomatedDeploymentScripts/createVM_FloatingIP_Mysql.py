@@ -2,11 +2,9 @@ import os_client_config
 import glanceclient.v2.client as glclient
 import keystoneclient.v2_0.client as ksclient
 from novaclient.client import Client
+from swiftclient.client import Connection, ClientException
 import os
 import paramiko
-import credentials
-import utils
-
 
 def exec_commands(commands,server):
     client = paramiko.SSHClient()
@@ -33,6 +31,9 @@ def getNovaClient():
     credentials = get_nova_credentials_v2()
     nova_client = os_client_config.make_client('compute',**credentials)
     return nova_client
+
+def getSwiftConn():
+    return Connection(**get_session_credentials())
 
 def createVM(name,network_id):
     novaclient = getNovaClient()
@@ -82,10 +83,9 @@ def createVM_W():
    
 
 
-## Main
-network_id = createNetwork()
+## Main 
 router_id = createRouter()
-
+network_id = createNetwork()
 
 createVM_Master(network_id)
 createVM_I()
@@ -93,3 +93,4 @@ createVM_S()
 createVM_B()
 createVM_P()
 createVM_W()
+
