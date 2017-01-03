@@ -1,6 +1,5 @@
-from flask import Flask,render_template
+from flask import Flask,render_template, request
 import MySQLdb
-import requests
 
 app = Flask(__name__)
 
