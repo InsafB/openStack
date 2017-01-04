@@ -15,21 +15,13 @@
   </div>
 
   <div class="login-form">
-    {% if id is not defined %}
-    <p No ID provided />
-    <br /><br />
-    {% if error is not none %}
-    <p Invalid ID />
-    <br /><br />
+    {% if id is defined %}
+    <p>ID: {{ id }}</p>
+    <p>First name: {{ firstname }}</p>
+    <p>Last name: {{ lastname }}</p>
+    <p>Email: {{ email }}</p>
     {% else %}
-    <p ID: {{ id }} />
-    <br /><br />
-    <p First name: {{ firstname }} />
-    <br /><br />
-    <p Last name: {{ lastname }} />
-    <br /><br />
-    <p Email: {{ email }}/>
-    <br /><br />
+    <p>Invalid ID</p>
     {% endif %}
   </div>
 
@@ -37,11 +29,9 @@
     <br /><br />
     <h1>Service S</h1>
     {% if not state %}
-    <p You have not played so far />
-    <br /><br />
+    <p>You have not played so far</p>
     {% else %}
-    <p You have already played at {{ time }} />
-    <br /><br />
+    <p>You have already played at {{ time }}</p>
     {% endif %}
   </div>
 
