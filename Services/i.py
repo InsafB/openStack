@@ -12,15 +12,14 @@ def identification():
     # Get master request with user_id
     user_id = request.args.get('user_id')
     error = None
-    cur.execute("SELECT first_name, last_name, email FROM users WHERE id = %d;", [user_id])
-    if not cur.fetchone()[0]:
+    cur.execute("SELECT firstname, lastname, email FROM users WHERE id = %s;", [user_id])
+    if not cur.fetchone():
         error = "Invalid id"
         return error
     else:
-        firstname = cur[1][0]
-        lastname = cur[1][1]
-        email = cur[1][2]
-        return user_id, firstname, lastname, email
+        for (firstname, lastname, email) in cur:
+            return firstname, lastname, email
+cur.close()
 db.close()
 
 if __name__ == '__main__':
