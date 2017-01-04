@@ -82,8 +82,7 @@ def putPicture(pictureToPut,pictureNewName,containerName):
 
 def getPicture(pictureToGet,containerName):
 	conn = getSwiftConn()
-	container = conn.get_container(containerName)
-	picture = container.get_object(pictureToGet)
+	picture = conn.get_object(containerName, pictureToGet)
 	return picture
 
 def createVM(name,network_id):
