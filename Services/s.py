@@ -16,12 +16,12 @@ def scanUser():
     return lookupUser(user_id)
 
 def lookupUser(user_id):
-    cur.execute("SELECT user_id, time FROM played WHERE id = %d;", [user_id])
-    if not cur.fetchone()[0]:
+    cur.execute("SELECT user_id, time FROM played WHERE id = %s;", [user_id])
+    if not cur.fetchone():
         return False
     else:
-        time = cur[1][1]
-        return True, time
+        for time in cur:
+            return True, time
 
 @app.route("/save",methods=['GET', 'POST'])
 def lookupUser():
@@ -30,7 +30,7 @@ def lookupUser():
     time = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
     cur.execute("""INSERT INTO played VALUES (%s, %s);""", (user_id,time))
     db.commit()
-
+cur.close()
 db.close()
 
 if __name__ == "__main__":
