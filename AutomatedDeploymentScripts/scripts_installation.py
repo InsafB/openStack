@@ -67,6 +67,25 @@ def getNovaClient():
 def getSwiftConn():
     return Connection(**get_session_credentials())
 
+def createSwiftContainers(Containers):
+	conn = getSwiftConn()
+	for Container in Containers:
+		conn.put_container(Container)
+	print("Create Containers: Execution completed")	
+
+def putPicture(pictureToPut,pictureNewName,containerName):
+	conn = getSwiftConn()
+	with open(pictureToPut, 'rb') as f:
+		file_data = f.read()
+	conn.put_object(containerName, pictureNewName, file_data)
+	print("Put Picture: Execution completed")	
+
+def getPicture(pictureToGet,containerName):
+	conn = getSwiftConn()
+	container = conn.get_container(containerName)
+	picture = container.get_object(pictureToGet)
+	return picture
+
 def createVM(name,network_id):
     novaclient = getNovaClient()
     ## Initiate VM parameters 
@@ -122,4 +141,4 @@ createVM_B()
 createVM_P()
 createVM_W()
 
-createSwift_store()
+createSwiftContainers(['containerProfiles','containerPrices'])
