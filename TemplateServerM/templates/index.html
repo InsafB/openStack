@@ -15,30 +15,40 @@
   </div>
 
   <div class="login-form">
-    {% if id is defined %}
+    {% if I_outofservice|string() == "yes" %}
+    <p>Identification server unavailable</p>
+    {% elif error|string() != "" %}
+    <p>Invalid ID</p>
+    {% else %}
     <p>ID: {{ id }}</p>
     <p>First name: {{ firstname }}</p>
     <p>Last name: {{ lastname }}</p>
     <p>Email: {{ email }}</p>
-    {% else %}
-    <p>Invalid ID</p>
     {% endif %}
   </div>
 
   <div class="login-form">
     <br /><br />
     <h1>Service S</h1>
-    {% if not state %}
+    {% if S_outofservice|string() == "yes" %}
+    <p>Status service unavailable</p>
+    {% elif hasplayed|string() == "no" %}
     <p>You have not played so far</p>
+    <br /><br />
     {% else %}
     <p>You have already played at {{ time }}</p>
+    <br /><br />
     {% endif %}
   </div>
 
   <div class="login-form">
     <form>
       <h1>Service B</h1>
+      {% if hasplayed|string() == "yes" %}
+      <input type="button" value="Play" disabled/>
+      {% else %}
       <input type="button" value="Play" />
+      {% endif %}
       <br /><br />
     </form>
   </div>
