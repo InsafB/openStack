@@ -7,13 +7,15 @@ app = Flask(__name__)
 @app.route('/',methods=['GET', 'POST'])
 def identification():
 	# Database config
-	db = MySQLdb.connect(host="ServerI", user="root",passwd="othmane", db="USERS")
+	db = MySQLdb.connect(host=ServerI, user="root", passwd="othmane", db="open_stack")
 	cur = db.cursor()
 	# Get master request with user_id
 	user_id = request.args.get('user_id')
 	cur.execute("SELECT first_name, last_name, email FROM users WHERE id = %s;", [user_id])
-	if not cur.fetchone():
-		error = {"error": "Invalid ID"}
+	if cur.rowcount==0:
+		cur.close()
+		db.close()
+		error = {"error": "Invalid_ID"}
 		return json.dumps(user)
 	else:
 		for (a, b, c) in cur:
@@ -22,11 +24,8 @@ def identification():
 			email = c
 		cur.close()
 		db.close()
-		user={"firstname":firstname,"lastname":lastname,"email":email}
+		user={"firstname":firstname, "lastname":lastname, "email":email}
 		return json.dumps(user)
 
 if __name__ == '__main__':
-	app.run(host = "ServerI", port=5050)
-
-	
-
+	app.run(host = ServerI, port=5050)
