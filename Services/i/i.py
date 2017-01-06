@@ -16,7 +16,7 @@ def identification():
 		cur.close()
 		db.close()
 		error = {"error": "Invalid_ID"}
-		return json.dumps(user)
+		return json.dumps(error)
 	else:
 		for (a, b, c) in cur:
 			firstname = a
