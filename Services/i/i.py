@@ -28,4 +28,5 @@ def identification():
 		return json.dumps(user)
 
 if __name__ == '__main__':
-	app.run(host = ServerI, port=5050)
+	#app.run(host = socket.gethostbyname(socket.gethostname()), port=80)
+	app.run(host = ServerI, port=80)
