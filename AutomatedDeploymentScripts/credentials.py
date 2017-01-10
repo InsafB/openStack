@@ -1,3 +1,4 @@
+import os
 def get_credentials():
     d = {}
     d['version'] = '2'
