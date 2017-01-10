@@ -7,6 +7,9 @@ from swiftclient.client import Connection, ClientException
 from credentials import *
 from utils import *
 
+DNS = {} 
+
+
 def createNetwork(network_name):
     credentials = get_credentials()
     neutron = client.Client(**credentials)
@@ -32,11 +35,12 @@ def createRouter(router_name):
 	print("Create Router: Execution Completed")
 	return router_id
 
-def createPort(port_name,router_id,network_id)
+def createPort(port_name,router_id,network_id):
 	body_create_port = {'port': {'admin_state_up': True,'device_id': router_id,'name': port_name,'network_id': network_id}}
 	response = neutron.create_port(body=body_create_port)
 	print(response)
 	print("Add Port to Network: Execution Completed")
+    
 
 def exec_commands(commands,server):
     client = paramiko.SSHClient()
@@ -49,10 +53,20 @@ def exec_commands(commands,server):
         exit_status = client_stdout.channel.recv_exit_status()
         print "exit status for command '",cmd," is : ",exit_status
 
-def appendHost(ip,ServerName):
+def appendHost(ip,ServerName,dest):
     command = "echo '"+ip+"    "+ServerName+"' >> /etc/hosts"
     commands = [command]
-    exec_commands(commands,ServerName)
+    exec_commands(commands,dest)
+
+
+def set_dns():
+    dests = list(DNS.keys())
+
+    for dest in dests:
+
+        for keydsn, value in DNS.items():
+
+            appendHost(keydsn,value,dest)
 
 def install_mysql(server):
     commands=["sudo apt-get update","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password othmane'","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password othmane'","sudo apt-get -y install mysql-server"]
@@ -95,7 +109,8 @@ def createVM(name,network_id):
     ## Create VM
     ServerName = "Server"+name
     instance = nova_client.servers.create(name=ServerName, image=image,flavor=flavor, key_name="key_mac", nics=nics)
-    appendHost(instance.to_dict()['addresses']['private'][0]['addr'],ServerName)
+    #appendHost(instance.to_dict()['addresses']['private'][0]['addr'],ServerName)
+    DNS[instance.to_dict()['addresses']['private'][0]['addr']] = ServerName
     return instance,ServerName
 
 def link_VM_FloatingIP(network_id,ServerName):
@@ -140,4 +155,7 @@ createVM_B()
 createVM_P()
 createVM_W()
 
+set_dns()
+
 createSwiftContainers(['containerProfiles','containerPrices'])
+
