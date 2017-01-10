@@ -1,7 +1,6 @@
 import os_client_config
 import os
 import paramiko
-import credentials
 from neutronclient.v2_0 import client
 from swiftclient.client import Connection, ClientException
 from credentials import *
