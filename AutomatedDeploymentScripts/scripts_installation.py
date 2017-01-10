@@ -30,7 +30,7 @@ def createRouter(router_name):
 	credentials = get_credentials()
 	neutron = client.Client(**credentials)
 	neutron.format = 'json'
-	request = {'router': {'name': router_name,'admin_state_up': True}}
+	request = {'router': {'name': router_name,'admin_state_up': True,'router:external': True}}
 	router = neutron.create_router(request)
 	router_id = router['router']['id']
 	print("Create Router: Execution Completed")
@@ -177,5 +177,3 @@ createSwiftContainers(['containerProfiles','containerPrices'])
 
 # set a list of sending commands
 #print("Sending the Master")
-
-
