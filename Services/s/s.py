@@ -41,4 +41,5 @@ def saveUser():
     return "Done"
 
 if __name__ == "__main__":
-    app.run(host = ServerS, port=5050)
+    #app.run(host = socket.gethostbyname(socket.gethostname()), port=80)
+    app.run(host = ServerS, port=80)
