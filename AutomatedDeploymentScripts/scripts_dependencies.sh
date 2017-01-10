@@ -4,10 +4,10 @@ export LC_ALL=C
 
 sudo apt-get update
 
-if sudo apt -y install python-pip ; then
-    echo "python-pip installation succeeded"
+if sudo apt -y install python3-pip ; then
+    echo "python3-pip installation succeeded"
 else
-    echo "python-pip installation failed"
+    echo "python3-pip installation failed"
 fi
 
 if sudo apt-get -y install python-openstackclient ; then
@@ -34,14 +34,14 @@ else
     echo "paramiko installation failed"
 fi
 
-if sudo pip install flask ; then
+if sudo pip3 install flask ; then
     echo "flask installation succeeded"
 else
     echo "flask installation failed"
 fi
 
-if sudo apt-get -y install python-mysqldb ; then
-    echo "mysqldb installation succeeded"
+if sudo pip3 install pymysql ; then
+    echo "pymysql installation succeeded"
 else
-    echo "mysqldb installation failed"
+    echo "pymysql installation failed"
 fi
