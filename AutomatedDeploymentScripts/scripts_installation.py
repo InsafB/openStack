@@ -25,14 +25,14 @@ def createNetwork(network_name):
 		print('SubNetwork %s has been successfuly created' % subnet)
 	finally:
 		print("Create Network: Execution completed")
-	return network_id 
+	return network_id, subnet['id']
 
-def createRouter(router_name):
+def createRouter(router_name,subnet_id):
 	credentials = get_credentials()
 	neutron = client.Client(**credentials)
 	neutron.format = 'json'
 	external_network=neutron.list_networks(name='external-network')
-	request = {'router': {'name': router_name,'admin_state_up': True,'external_gateway_info':{"network_id":external_network['networks'][0]['id']}}}
+	request = {'router': {'name': router_name,'admin_state_up': True,'subnet_id':subnet_id, 'external_gateway_info':{"network_id":external_network['networks'][0]['id']}}}
 	router = neutron.create_router(request)
 	router_id = router['router']['id']
 	print("Create Router: Execution Completed")
@@ -161,9 +161,9 @@ def createVM_W():
 	   
 ## Main 
 print("Creation of network")
-network_id = createNetwork('private_network_project_F')
+network_id, subnet_id = createNetwork('private_network_project_F')
 print("Creation of router")
-router_id = createRouter('router_project')
+router_id = createRouter('router_project',subnet_id)
 print("Creation of port")
 createPort('port_project',router_id, network_id)
 #network_id = "9e6b3047-e5b8-4be8-ad64-b5b6155328cf"
