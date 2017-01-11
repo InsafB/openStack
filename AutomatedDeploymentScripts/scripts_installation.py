@@ -25,7 +25,7 @@ def createNetwork(network_name):
 		print('SubNetwork %s has been successfuly created' % subnet)
 	finally:
 		print("Create Network: Execution completed")
-	return network_id, subnet['id']
+	return network_id, subnet['subnets'][0]['id']
 
 def createRouter(router_name,subnet_id):
 	credentials = get_credentials()
@@ -123,8 +123,8 @@ def createVM(name,network_id):
 		time.sleep(1)
 		instance = nova_client.servers.find(name=ServerName)
 	
-	#appendHostLocal(instance.to_dict()['addresses']['private_network_project_1'][0]['addr'],ServerName)
-	DNS[instance.to_dict()['addresses']['private_network_project_F'][0]['addr']] = ServerName
+	#appendHostLocal(instance.to_dict()['addresses']['private_network'][0]['addr'],ServerName)
+	DNS[instance.to_dict()['addresses']['private_network'][0]['addr']] = ServerName
 	return instance,ServerName
 
 def link_VM_FloatingIP(network_id,ServerName):
@@ -140,7 +140,7 @@ def link_VM_FloatingIP(network_id,ServerName):
 def createVM_Master(network_id):
 	instance , ServerName = createVM("Master",network_id)
 	link_VM_FloatingIP(network_id,ServerName)
-	appendHostLocal(instance.to_dict()['addresses']['private_network_project_F'][0]['addr'],ServerName)
+	appendHostLocal(instance.to_dict()['addresses']['private_network'][0]['addr'],ServerName)
 
 def createVM_I():
 	instance , ServerName =createVM("I",network_id)
@@ -161,7 +161,7 @@ def createVM_W():
 	   
 ## Main 
 print("Creation of network")
-network_id, subnet_id = createNetwork('private_network_project_F')
+network_id, subnet_id = createNetwork('private_network')
 print("Creation of router")
 router_id = createRouter('router_project',subnet_id)
 print("Creation of port")
