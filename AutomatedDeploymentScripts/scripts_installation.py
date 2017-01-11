@@ -20,7 +20,7 @@ def createNetwork(network_name):
 		network_dict = network['network']
 		network_id = network_dict['id']
 		print('Network %s has been successfuly created' % network_id)
-		body_create_subnet = {'subnets': [{'cidr': '10.0.1.0/24','ip_version': 4, 'network_id': network_id}]}
+		body_create_subnet = {'subnets': [{'cidr': '10.0.1.0/24','ip_version': 4,'gateway_ip': '10.0.1.254', 'dns_nameservers': ['10.11.50.1'], 'network_id': network_id}]}
 		subnet = neutron.create_subnet(body=body_create_subnet)
 		print('SubNetwork %s has been successfuly created' % subnet)
 	finally:
@@ -186,10 +186,8 @@ print("Set-up of DNS")
 #set_dns()
 
 print("Creation of Containers")
-#createSwiftContainers(['containerProfiles','containerPrices'])
+#createSwiftContainers(['containerPrices'])
 
 
 # set a list of sending commands
 #print("Sending the Master")
-
-
