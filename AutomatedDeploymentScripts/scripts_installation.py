@@ -6,6 +6,7 @@ from neutronclient.v2_0 import client
 from swiftclient.client import Connection, ClientException
 from credentials import *
 from utils import *
+import time
 
 DNS = {} 
 
@@ -19,7 +20,7 @@ def createNetwork(network_name):
 		network_dict = network['network']
 		network_id = network_dict['id']
 		print('Network %s has been successfuly created' % network_id)
-		body_create_subnet = {'subnets': [{'cidr': '192.168.0.0/24','ip_version': 4, 'network_id': network_id}]}
+		body_create_subnet = {'subnets': [{'cidr': '10.0.1.0/24','ip_version': 4, 'network_id': network_id}]}
 		subnet = neutron.create_subnet(body=body_create_subnet)
 		print('SubNetwork %s has been successfuly created' % subnet)
 	finally:
@@ -30,7 +31,8 @@ def createRouter(router_name):
 	credentials = get_credentials()
 	neutron = client.Client(**credentials)
 	neutron.format = 'json'
-	request = {'router': {'name': router_name,'admin_state_up': True}}
+	external_network=neutron.list_networks(name='external-network')
+	request = {'router': {'name': router_name,'admin_state_up': True,'external_gateway_info':{"network_id":external_network['networks'][0]['id']}}}
 	router = neutron.create_router(request)
 	router_id = router['router']['id']
 	print("Create Router: Execution Completed")
@@ -61,6 +63,9 @@ def appendHost(ip,ServerName,dest):
 	commands = [command]
 	exec_commands(commands,dest)
 
+def appendHostLocal(ip,ServerName):
+	command = "echo '"+ip+"    "+ServerName+"' | sudo tee -a /etc/hosts"
+	os.system(command)
 
 def set_dns():
 	dests = list(DNS.keys())
@@ -103,7 +108,7 @@ def getPicture(pictureToGet,containerName):
 	return picture
 
 def createVM(name,network_id):
-	novaclient = getNovaClient()
+	nova_client = getNovaClient()
 	## Initiate VM parameters 
 	image = nova_client.images.find(name="ubuntu1404")
 	flavor = nova_client.flavors.find(name="m1.small")
@@ -111,23 +116,31 @@ def createVM(name,network_id):
 	nics = [{'net-id': net.id}]
 	## Create VM
 	ServerName = "Server"+name
-	instance = nova_client.servers.create(name=ServerName, image=image,flavor=flavor, key_name="key_mac", nics=nics)
-	appendHost(instance.to_dict()['addresses']['private'][0]['addr'],ServerName,"localhost")
-	DNS[instance.to_dict()['addresses']['private'][0]['addr']] = ServerName
+	nova_client.servers.create(name=ServerName, image=image,flavor=flavor, key_name="key_mac", nics=nics)
+	print("VM ",ServerName," created , waiting for running state")
+	instance = nova_client.servers.find(name=ServerName)
+	while instance.to_dict()['OS-EXT-STS:power_state'] != 1:
+		time.sleep(1)
+		instance = nova_client.servers.find(name=ServerName)
+	
+	#appendHostLocal(instance.to_dict()['addresses']['private_network_project_1'][0]['addr'],ServerName)
+	DNS[instance.to_dict()['addresses']['private_network_project_F'][0]['addr']] = ServerName
 	return instance,ServerName
 
 def link_VM_FloatingIP(network_id,ServerName):
 	nova_client = getNovaClient()
 	##Ask for a floating IP
-	#floating_ip = nova_client.floating_ips.create(nova_client.floating_ip_pools.list()[0].name)
+	floating_ip = nova_client.floating_ips.create(nova_client.floating_ip_pools.list()[0].name)
 	#link with an existing ip ( already created)
-	floating_ip = nova_client.floating_ips.find(id=network_id)
+	#floating_ip = nova_client.floating_ips.find(id=network_id)
 	instance = nova_client.servers.find(name=ServerName)
+	time.sleep(10)
 	instance.add_floating_ip(floating_ip)
 
 def createVM_Master(network_id):
 	instance , ServerName = createVM("Master",network_id)
 	link_VM_FloatingIP(network_id,ServerName)
+	appendHostLocal(instance.to_dict()['addresses']['private_network_project_F'][0]['addr'],ServerName)
 
 def createVM_I():
 	instance , ServerName =createVM("I",network_id)
@@ -148,11 +161,12 @@ def createVM_W():
 	   
 ## Main 
 print("Creation of network")
-network_id = createNetwork('private_network_project')
+network_id = createNetwork('private_network_project_F')
 print("Creation of router")
 router_id = createRouter('router_project')
 print("Creation of port")
 createPort('port_project',router_id, network_id)
+#network_id = "9e6b3047-e5b8-4be8-ad64-b5b6155328cf"
 
 print("Creation of VMs")
 print("Creation of Master")
@@ -169,11 +183,13 @@ print("Creation of W")
 createVM_W()
 
 print("Set-up of DNS")
-set_dns()
+#set_dns()
 
 print("Creation of Containers")
-createSwiftContainers(['containerProfiles','containerPrices'])
+#createSwiftContainers(['containerProfiles','containerPrices'])
 
 
 # set a list of sending commands
 #print("Sending the Master")
+
+
