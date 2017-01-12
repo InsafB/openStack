@@ -32,7 +32,8 @@ def createRouter(router_name):
 	neutron = client.Client(**credentials)
 	neutron.format = 'json'
 	external_network=neutron.list_networks(name='external-network')
-	request = {'router': {'name': router_name,'admin_state_up': True}}
+	print("external network-id",external_network['networks'][0]['id'])
+	request = {'router': {'name': router_name,'admin_state_up': True,'external_gateway_info':{"network_id":external_network['networks'][0]['id']}}}
 	 #'external_gateway_info':{"network_id":external_network['networks'][0]['id']}
 	router = neutron.create_router(request)
 	router_id = router['router']['id']
@@ -125,7 +126,7 @@ def createVM(name,network_id):
 		instance = nova_client.servers.find(name=ServerName)
 	
 	#appendHostLocal(instance.to_dict()['addresses']['private_network'][0]['addr'],ServerName)
-	DNS[instance.to_dict()['addresses']['private_network'][0]['addr']] = ServerName
+	#DNS[instance.to_dict()['addresses']['private_network'][0]['addr']] = ServerName
 	return instance,ServerName
 
 def link_VM_FloatingIP(network_id,ServerName):
@@ -172,7 +173,7 @@ createPort('port_project',router_id, network_id,subnet_id)
 print("Creation of VMs")
 print("Creation of Master")
 createVM_Master(network_id)
-print("Creation of I")
+'''print("Creation of I")
 createVM_I()
 print("Creation of S")
 createVM_S()
@@ -182,7 +183,7 @@ print("Creation of P")
 createVM_P()
 print("Creation of W")
 createVM_W()
-
+'''
 print("Set-up of DNS")
 #set_dns()
 
