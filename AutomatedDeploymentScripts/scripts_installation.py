@@ -20,28 +20,29 @@ def createNetwork(network_name):
 		network_dict = network['network']
 		network_id = network_dict['id']
 		print('Network %s has been successfuly created' % network_id)
-		body_create_subnet = {'subnets': [{'cidr': '10.0.1.0/24','ip_version': 4,'gateway_ip': '10.0.1.254', 'dns_nameservers': ['10.11.50.1'], 'network_id': network_id}]}
+		body_create_subnet = {'subnets': [{'name':'private_subnet_project','cidr': '10.0.2.0/24','ip_version': 4,'gateway_ip': '10.0.2.254', 'dns_nameservers': ['10.11.50.1'], 'network_id': network_id}]}
 		subnet = neutron.create_subnet(body=body_create_subnet)
 		print('SubNetwork %s has been successfuly created' % subnet)
 	finally:
 		print("Create Network: Execution completed")
 	return network_id, subnet['subnets'][0]['id']
 
-def createRouter(router_name,subnet_id):
+def createRouter(router_name):
 	credentials = get_credentials()
 	neutron = client.Client(**credentials)
 	neutron.format = 'json'
 	external_network=neutron.list_networks(name='external-network')
-	request = {'router': {'name': router_name,'admin_state_up': True,'subnet_id':subnet_id, 'external_gateway_info':{"network_id":external_network['networks'][0]['id']}}}
+	request = {'router': {'name': router_name,'admin_state_up': True}}
+	 #'external_gateway_info':{"network_id":external_network['networks'][0]['id']}
 	router = neutron.create_router(request)
 	router_id = router['router']['id']
 	print("Create Router: Execution Completed")
 	return router_id
 
-def createPort(port_name,router_id,network_id):
+def createPort(port_name,router_id,network_id,subnet_id):
 	credentials = get_credentials()
 	neutron = client.Client(**credentials)
-	body_create_port = {'port': {'admin_state_up': True,'device_id': router_id,'name': port_name,'network_id': network_id}}
+	body_create_port = {'port': {'admin_state_up': True,'device_id': router_id,'name': port_name,'network_id': network_id,'fixed_ips':[{'subnet_id':subnet_id,'ip_address':'10.0.2.254'}]}}
 	response = neutron.create_port(body=body_create_port)
 	print(response)
 	print("Add Port to Network: Execution Completed")
@@ -139,8 +140,8 @@ def link_VM_FloatingIP(network_id,ServerName):
 
 def createVM_Master(network_id):
 	instance , ServerName = createVM("Master",network_id)
-	link_VM_FloatingIP(network_id,ServerName)
-	appendHostLocal(instance.to_dict()['addresses']['private_network'][0]['addr'],ServerName)
+	#link_VM_FloatingIP(network_id,ServerName)
+	#appendHostLocal(instance.to_dict()['addresses']['private_network'][0]['addr'],ServerName)
 
 def createVM_I():
 	instance , ServerName =createVM("I",network_id)
@@ -163,9 +164,9 @@ def createVM_W():
 print("Creation of network")
 network_id, subnet_id = createNetwork('private_network')
 print("Creation of router")
-router_id = createRouter('router_project',subnet_id)
+router_id = createRouter('router_project')
 print("Creation of port")
-createPort('port_project',router_id, network_id)
+createPort('port_project',router_id, network_id,subnet_id)
 #network_id = "9e6b3047-e5b8-4be8-ad64-b5b6155328cf"
 
 print("Creation of VMs")
