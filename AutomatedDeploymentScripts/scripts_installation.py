@@ -57,7 +57,7 @@ def exec_commands(commands,server):
 		print "exit status for command '",cmd," is : ",exit_status
 
 def appendHost(ip,ServerName,dest):
-	command = "echo '"+ip+"    "+ServerName+"' >> /etc/hosts"
+	command = "echo '"+ip+"    "+ServerName+"' | sudo tee -a /etc/hosts"
 	commands = [command]
 	exec_commands(commands,dest)
 
