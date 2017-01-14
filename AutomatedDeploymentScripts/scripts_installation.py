@@ -65,10 +65,7 @@ def appendHost(ip,ServerName,dest):
 
 def appendHostLocal(ip,ServerName):
 	command = "echo '"+ip+"    "+ServerName+"' | sudo tee -a /etc/hosts"
-	
-	
-	
-	(command)
+	os.system(command)
 
 def set_dns():
 	dests = list(DNS.keys())
