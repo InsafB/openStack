@@ -41,10 +41,10 @@ def createRouter(router_name):
 	return router_id
 
 def createPort(port_name,router_id,network_id,subnet_id):
-	print("creation d'interface\n")
+	print("Adding the interface\n")
 	os.system('neutron router-interface-add '+router_id+' '+subnet_id)
 	print(response)
-	print("Add Port to Network: Execution Completed")
+	print("Adding interface: Execution Completed")
 	
 
 def exec_commands(commands,server):
