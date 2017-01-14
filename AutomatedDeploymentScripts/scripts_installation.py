@@ -158,8 +158,8 @@ def createVM_P():
 def createVM_W():
 	instance , ServerName = createVM("W",network_id)
 
-def sendFolder(path, ip_dest, path_dest):
-	command = "scp -r " + path+" ubuntu@"  + ip_dest + ":" + path_dest
+def sendObject(path, dest, path_dest):
+	command = "scp -r " + path + " ubuntu@"  + dest + ":" + path_dest
 	commands = [command]
 	exec_commands(commands,dest)
 	   
@@ -196,9 +196,13 @@ print("Creation of Containers")
 # set a list of sending commands
 #print("Sending the Master")
 
-# Sending the project to the Master
-#path = '~/openStack'
-#path_dest = '~/'
+# Sending the project and the needed files to the Master
+path = '~/openStack'
+path_dest = '~/'
+path_ss = "~/.ssh/"
 
-
-#sendFolder(path, ip_master, path_dest)
+sendObject(path, "ServerMaster", path_dest)
+sendObject(path_ssh+"id_rsa", "ServerMaster", path_dest)
+sendObject(path_ssh+"id_rsa.pub", "ServerMaster", path_dest)
+sendObject("config", "ServerMaster", path_dest)
+sendObject("project9-openrc.sh", "ServerMaster", path_dest)
