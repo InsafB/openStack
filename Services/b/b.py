@@ -59,7 +59,6 @@ def puchImageSwift(pictureToPut,pictureNewName,containerName):
     print("Put Picture: Execution completed")   
 
 if __name__ == "__main__":
-
     #app.run(host = socket.gethostbyname(socket.gethostname()), port=80)
     app.run(host = 'ServerB', port=80)
     
