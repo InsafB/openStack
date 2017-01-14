@@ -202,7 +202,7 @@ path_dest = '~/'
 path_ssh = "~/.ssh/"
 
 sendObject(path, "ServerMaster", path_dest)
-sendObject(path_ssh+"id_rsa", "ServerMaster", path_dest)
-sendObject(path_ssh+"id_rsa.pub", "ServerMaster", path_dest)
-sendObject("config", "ServerMaster", path_dest)
+sendObject(path_ssh+"id_rsa", "ServerMaster", path_ssh)
+sendObject(path_ssh+"id_rsa.pub", "ServerMaster", path_ssh)
+sendObject(path_ssh+"config", "ServerMaster", path_ssh)
 sendObject("project9-openrc.sh", "ServerMaster", path_dest)
