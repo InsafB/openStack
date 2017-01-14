@@ -33,6 +33,14 @@ def install_mysql(server):
 	commands=["sudo apt-get update","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password othmane'","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password othmane'","sudo apt-get -y install mysql-server"]
 	exec_commands(commands,server)
 
+def appendHost(ip,ServerName,dest):
+	command = "echo '"+ip+"    "+ServerName+"' | sudo tee -a /etc/hosts"
+	commands = [command]
+	exec_commands(commands,dest)
+	
+def sendIPs(ServerName,dest):
+	ip = socket.gethostbyname(ServerName)
+	appendHost(ip,ServerName,dest)
 	
 install_mysql("ServerI")
 install_mysql("ServerS")
