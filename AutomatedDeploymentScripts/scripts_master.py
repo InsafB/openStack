@@ -58,6 +58,8 @@ for OaS in ObjectsAndServers:
 Servers = ["ServerB", "ServerI", "ServerS", "ServerW", "ServerP"]
 for Server in Servers:
 	sendAndExecuteDependencies(path_dependencies, Server, path_dest)
+	for ServerName in Servers:
+		sendIPs(ServerName,Server)
 
 ServicesAndServers = [["b/b.py", "ServerB"],["i/i.py", "ServerI"],["s/s.py", "ServerS"],["w/w.py", "ServerW"],["p/p.py", "ServerP"]]
 for SaS in ServicesAndServers:
