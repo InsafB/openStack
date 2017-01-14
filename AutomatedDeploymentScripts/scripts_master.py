@@ -24,8 +24,8 @@ def sendAndExecuteDependencies(path_dependencies, dest, path_dest):
 	commands = [command1, command2]
 	exec_commands(commands,dest)
 
-def executeService(file, dest):
-	command = "python " + file
+def executeService(fileName, dest):
+	command = "python " + fileName
 	commands = [command]
 	exec_commands(commands,dest)
 
