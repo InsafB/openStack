@@ -41,10 +41,8 @@ def createRouter(router_name):
 	return router_id
 
 def createPort(port_name,router_id,network_id,subnet_id):
-	credentials = get_credentials()
-	neutron = client.Client(**credentials)
-	body_create_port = {'port': {'admin_state_up': True,'device_id': router_id,'name': port_name,'network_id': network_id,'fixed_ips':[{'subnet_id':subnet_id,'ip_address':'10.0.2.254'}]}}
-	response = neutron.create_port(body=body_create_port)
+	print("creation d'interface\n")
+	os.system('neutron router-interface-add '+router_id+' '+subnet_id)
 	print(response)
 	print("Add Port to Network: Execution Completed")
 	
@@ -67,7 +65,10 @@ def appendHost(ip,ServerName,dest):
 
 def appendHostLocal(ip,ServerName):
 	command = "echo '"+ip+"    "+ServerName+"' | sudo tee -a /etc/hosts"
-	os.system(command)
+	
+	
+	
+	(command)
 
 def set_dns():
 	dests = list(DNS.keys())
