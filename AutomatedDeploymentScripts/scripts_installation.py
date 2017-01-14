@@ -199,7 +199,7 @@ print("Creation of Containers")
 #print("Sending the Master")
 
 # Sending the project and the needed files to the Master
-path = '~/openStack'
+path = '~/openStack-master'
 path_dest = '~/'
 path_ssh = "~/.ssh/"
 
