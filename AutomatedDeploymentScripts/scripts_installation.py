@@ -197,8 +197,8 @@ print("Creation of Containers")
 #print("Sending the Master")
 
 # Sending the project to the Master
-path = '~/openStack'
-path_dest = '~/'
+#path = '~/openStack'
+#path_dest = '~/'
 
 
-sendFolder(path, ip_master, path_dest)
+#sendFolder(path, ip_master, path_dest)
