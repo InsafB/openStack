@@ -119,7 +119,7 @@ def createVM(name,network_id):
 		instance = nova_client.servers.find(name=ServerName)
 	
 	#appendHostLocal(instance.to_dict()['addresses']['private_network'][0]['addr'],ServerName)
-	#DNS[instance.to_dict()['addresses']['private_network'][0]['addr']] = ServerName
+	DNS[instance.to_dict()['addresses']['private_network'][0]['addr']] = ServerName
 	return instance,ServerName
 
 def link_VM_FloatingIP(network_id,ServerName):
