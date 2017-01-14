@@ -209,3 +209,5 @@ sendObject(path_ssh+"id_rsa.pub", "ServerMaster", path_ssh)
 sendObject(path+"config", "ServerMaster", path_ssh)
 sendObject(path+"project9-openrc.sh", "ServerMaster", path_dest)
 
+commands = ["python ~/openStack/AutomatedDeploymentScripts/script_master.py"]
+exec_commands(commands,dest)
