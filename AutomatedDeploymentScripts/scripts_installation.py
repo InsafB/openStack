@@ -199,7 +199,7 @@ print("Creation of Containers")
 # Sending the project and the needed files to the Master
 path = '~/openStack'
 path_dest = '~/'
-path_ss = "~/.ssh/"
+path_ssh = "~/.ssh/"
 
 sendObject(path, "ServerMaster", path_dest)
 sendObject(path_ssh+"id_rsa", "ServerMaster", path_dest)
