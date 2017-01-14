@@ -138,8 +138,8 @@ def link_VM_FloatingIP(network_id,ServerName):
 
 def createVM_Master(network_id):
 	instance , ServerName = createVM("Master",network_id)
-	#link_VM_FloatingIP(network_id,ServerName)
-	#appendHostLocal(instance.to_dict()['addresses']['private_network'][0]['addr'],ServerName)
+	link_VM_FloatingIP(network_id,ServerName)
+	appendHostLocal(instance.to_dict()['addresses']['private_network'][1]['addr'],ServerName)
 
 def createVM_I():
 	instance , ServerName =createVM("I",network_id)
@@ -157,6 +157,11 @@ def createVM_P():
 
 def createVM_W():
 	instance , ServerName = createVM("W",network_id)
+
+def sendFolder(path, ip_dest, path_dest):
+	command = "scp " + path + " -r " + ip_dest + ":" + path_dest
+	commands = [command]
+	exec_commands(commands,dest)
 	   
 ## Main 
 print("Creation of network")
@@ -190,3 +195,10 @@ print("Creation of Containers")
 
 # set a list of sending commands
 #print("Sending the Master")
+
+# Sending the project to the Master
+path = '~/openStack'
+path_dest = '~/'
+ip_master = nova_client.floating_ips.find(id=network_id)
+
+sendFolder(path, ip_master, path_dest)
