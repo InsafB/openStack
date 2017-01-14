@@ -45,7 +45,6 @@ def createPort(router_id,subnet_id):
 	os.system('neutron router-interface-add '+router_id+' '+subnet_id)
 	print("Adding interface: Execution Completed")
 	
-
 def exec_commands(commands,server):
 	client = paramiko.SSHClient()
 	client.load_system_host_keys()
@@ -68,12 +67,8 @@ def appendHostLocal(ip,ServerName):
 
 def set_dns():
 	dests = list(DNS.keys())
-
 	for keydsn, value in DNS.items():
-
 		appendHost(keydsn,value,"ServerMaster")
-
-
 
 def getNovaClient():
 	## Nova Client
@@ -118,7 +113,6 @@ def createVM(name,network_id):
 		time.sleep(1)
 		instance = nova_client.servers.find(name=ServerName)
 	
-	#appendHostLocal(instance.to_dict()['addresses']['private_network'][0]['addr'],ServerName)
 	DNS[instance.to_dict()['addresses']['private_network'][0]['addr']] = ServerName
 	return instance,ServerName
 
@@ -142,12 +136,10 @@ def createVM_I(network_id):
 	instance , ServerName =createVM("I",network_id)
 	print("Creation of ",ServerName," is done\n")
 	
-
 def createVM_S(network_id):
 	instance , ServerName =createVM("S",network_id)
 	print("Creation of ",ServerName," is done\n")
 	
-
 def createVM_B(network_id):
 	instance , ServerName = createVM("B",network_id)
 	print("Creation of ",ServerName," is done\n")
@@ -189,14 +181,13 @@ print("Creation of W")
 createVM_W(network_id)
 
 print("Set-up of DNS")
-#set_dns()
+set_dns()
 
 print("Creation of Containers")
-#createSwiftContainers(['containerPrices'])
-
+createSwiftContainers(['containerPrices'])
 
 # set a list of sending commands
-#print("Sending the Master")
+print("Sending the Master")
 
 # Sending the project and the needed files to the Master
 path = '~/openStack-master'
@@ -209,5 +200,6 @@ sendObject(path_ssh+"id_rsa.pub", "ServerMaster", path_ssh)
 sendObject(path+"config", "ServerMaster", path_ssh)
 sendObject(path+"project9-openrc.sh", "ServerMaster", path_dest)
 
+print("Execution of dependencies and scripts_master on the ServerMaster")
 commands = ["bash ~/openStack/AutomatedDeploymentScripts/scripts_dependencies.sh","python ~/openStack/AutomatedDeploymentScripts/scripts_master.py"]
 exec_commands(commands,"ServerMaster")
