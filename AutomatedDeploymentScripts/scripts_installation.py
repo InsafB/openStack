@@ -69,15 +69,11 @@ def appendHostLocal(ip,ServerName):
 def set_dns():
 	dests = list(DNS.keys())
 
-	for dest in dests:
+	for keydsn, value in DNS.items():
 
-		for keydsn, value in DNS.items():
+		appendHost(keydsn,value,"ServerMaster")
 
-			appendHost(keydsn,value,dest)
 
-def install_mysql(server):
-	commands=["sudo apt-get update","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password othmane'","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password othmane'","sudo apt-get -y install mysql-server"]
-	exec_commands(commands,server)
 
 def getNovaClient():
 	## Nova Client
@@ -140,23 +136,29 @@ def createVM_Master(network_id):
 	instance , ServerName = createVM("Master",network_id)
 	link_VM_FloatingIP(network_id,ServerName)
 	appendHostLocal(instance.to_dict()['addresses']['private_network'][1]['addr'],ServerName)
+	print("Creation of ",ServerName," is done\n")
 
-def createVM_I():
+def createVM_I(network_id):
 	instance , ServerName =createVM("I",network_id)
-	install_mysql(ServerName)
+	print("Creation of ",ServerName," is done\n")
+	
 
-def createVM_S():
+def createVM_S(network_id):
 	instance , ServerName =createVM("S",network_id)
-	install_mysql(ServerName)
+	print("Creation of ",ServerName," is done\n")
+	
 
-def createVM_B():
+def createVM_B(network_id):
 	instance , ServerName = createVM("B",network_id)
+	print("Creation of ",ServerName," is done\n")
 
-def createVM_P():
+def createVM_P(network_id):
 	instance , ServerName = createVM("P",network_id)
+	print("Creation of ",ServerName," is done\n")
 
-def createVM_W():
+def createVM_W(network_id):
 	instance , ServerName = createVM("W",network_id)
+	print("Creation of ",ServerName," is done\n")
 
 def sendObject(path, dest, path_dest):
 	command = "scp -r " + path + " ubuntu@"  + dest + ":" + path_dest
@@ -170,22 +172,22 @@ print("Creation of router")
 router_id = createRouter('router_project')
 print("Creation of port")
 createPort(router_id,subnet_id)
-#network_id = "9e6b3047-e5b8-4be8-ad64-b5b6155328cf"
+#network_id = "02538e2f-52d4-4a0d-8252-0c09edb95a35"
 
 print("Creation of VMs")
 print("Creation of Master")
 createVM_Master(network_id)
-'''print("Creation of I")
-createVM_I()
+print("Creation of I")
+createVM_I(network_id)
 print("Creation of S")
-createVM_S()
+createVM_S(network_id)
 print("Creation of B")
-createVM_B()
+createVM_B(network_id)
 print("Creation of P")
-createVM_P()
+createVM_P(network_id)
 print("Creation of W")
-createVM_W()
-'''
+createVM_W(network_id)
+
 print("Set-up of DNS")
 #set_dns()
 
@@ -197,12 +199,13 @@ print("Creation of Containers")
 #print("Sending the Master")
 
 # Sending the project and the needed files to the Master
-path = '~/openStack-master'
+path = '~/openStack'
 path_dest = '~/'
 path_ssh = "~/.ssh/"
 
 sendObject(path, "ServerMaster", path_dest)
 sendObject(path_ssh+"id_rsa", "ServerMaster", path_ssh)
 sendObject(path_ssh+"id_rsa.pub", "ServerMaster", path_ssh)
-sendObject(path_ssh+"config", "ServerMaster", path_ssh)
+sendObject("config", "ServerMaster", path_ssh)
 sendObject("project9-openrc.sh", "ServerMaster", path_dest)
+
