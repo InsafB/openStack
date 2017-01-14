@@ -42,12 +42,16 @@
   </div>
 
   <div class="login-form">
-    <form>
+    <form action="/play?user_id={{id}}" method="post">
       <h1>Service B</h1>
-      {% if hasplayed|string() == "yes" %}
-      <input type="button" value="Play" disabled/>
+      {% if B_outofservice|string() == "yes" %}
+      <p>Button server unavailable</p>
+      {% elif W_outofservice|string() == "yes" %}
+      <p>Worker server unavailable</p>
+      {% elif hasplayed|string() == "no" %}
+      <input type="submit" value="Play" />
       {% else %}
-      <input type="button" value="Play" />
+      <input type="submit" value="Play" disabled/>
       {% endif %}
       <br /><br />
     </form>
@@ -56,7 +60,15 @@
   <div class="login-form">
     <br /><br />
     <h1>Service P</h1>
-    <br /><br />
+    {% if P_outofservice|string() == "yes" %}
+    <p>Picture server unavailable</p>
+    {% elif hasplayed|string() == "no" %}
+    <p>No image found: You have not played yet</p>
+    {% elif image_prize|string() != "" %}
+    <img src="static/image.jpg" alt="" style="width:400px;height:350px;">
+    {% else %}
+    <p>?</p>
+    {% endif %}
   </div>
 </div>
 </body>
