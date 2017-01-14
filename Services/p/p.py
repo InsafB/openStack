@@ -14,7 +14,7 @@ def getImage():
         image = str(user_id)+".jpg"
         #print("*******Image:", image)
         swiftimage = getImageSwift(image, "ContainerB")
-        return send_file(image, mimetype='image/jpg')
+        return send_file(swiftimage, mimetype='image/jpg')
     except FileNotFoundError:
         return "NoFile"
 
