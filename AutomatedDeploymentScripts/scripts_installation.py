@@ -67,8 +67,8 @@ def appendHostLocal(ip,ServerName):
 
 def set_dns():
 	dests = list(DNS.keys())
-	for keydsn, value in DNS.items():
-		appendHost(keydsn,value,"ServerMaster")
+	for keydns, value in DNS.items():
+		appendHost(keydns,value,"ServerMaster")
 
 def getNovaClient():
 	## Nova Client
