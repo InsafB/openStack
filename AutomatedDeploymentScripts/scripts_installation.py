@@ -199,6 +199,4 @@ print("Creation of Containers")
 # Sending the project to the Master
 path = '~/openStack'
 path_dest = '~/'
-ip_master = nova_client.floating_ips.find(id=network_id)
-
-sendFolder(path, ip_master, path_dest)
+sendFolder(path, "ServerMaster", path_dest)
