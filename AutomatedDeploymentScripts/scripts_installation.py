@@ -43,7 +43,6 @@ def createRouter(router_name):
 def createPort(router_id,subnet_id):
 	print("Adding the interface\n")
 	os.system('neutron router-interface-add '+router_id+' '+subnet_id)
-	print(response)
 	print("Adding interface: Execution Completed")
 	
 
