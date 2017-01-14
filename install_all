@@ -4,4 +4,4 @@ bash AutomatedDeploymentScripts/initial_dependencies.sh
 
 source project9-openrc.sh
 
-bash AutomatedDeploymentScripts/scripts_installation.py
+python AutomatedDeploymentScripts/scripts_installation.py
