@@ -63,6 +63,6 @@ for Server in Servers:
 
 ServicesAndServers = [["b/b.py", "ServerB"],["i/i.py", "ServerI"],["s/s.py", "ServerS"],["w/w.py", "ServerW"],["p/p.py", "ServerP"]]
 for SaS in ServicesAndServers:
-	executeService(path_dest + SaS[0], SaS[1])
+	#executeService(path_dest + SaS[0], SaS[1])
 	
-executeService(path_dest + "openStack-master/TemplateServerM/serverM.py", "ServerM")	
+#executeService(path_dest + "openStack-master/TemplateServerM/serverM.py", "ServerM")	
