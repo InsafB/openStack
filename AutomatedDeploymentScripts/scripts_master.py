@@ -27,32 +27,32 @@ def sendAndExecuteDependencies(path_dependencies, dest, path_dest):
 def executeService(fileName, dest):
 	command = "python " + fileName
 	commands = [command]
-	exec_commands(commands,dest)
-	
+	exec_commands(commands,dest)	
 	
 def install_mysql(server):
 	commands=["sudo apt-get update","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password othmane'","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password othmane'","sudo apt-get -y install mysql-server"]
 	exec_commands(commands,server)
 
-
+	
 install_mysql("ServerI")
 install_mysql("ServerS")
 
 
-path_services = "~/openStack/Services/"
+path_services = "~/openStack-master/Services/"
 dependencies = "scripts_dependencies.sh"
-path_dependencies = "~/openStack/AutomatedDeploymentScripts/" + dependencies
+path_dependencies = "~/openStack-master/AutomatedDeploymentScripts/" + dependencies
 path_dest = "~/"
 
 ObjectsAndServers = [["b", "ServerB"],["i", "ServerI"],["s", "ServerS"],["w", "ServerW"],["p", "ServerP"]]
-for OS in ObjectsAndServers:	
-	sendObject(path_services + OS[0], OS[1], path_dest + OS[0])
+for OaS in ObjectsAndServers:	
+	sendObject(path_services + OaS[0], OaS[1], path_dest + OaS[0])
 
 Servers = ["ServerB", "ServerI", "ServerS", "ServerW", "ServerP"]
 for Server in Servers:
 	sendAndExecuteDependencies(path_dependencies, Server, path_dest)
 
 ServicesAndServers = [["b/b.py", "ServerB"],["i/i.py", "ServerI"],["s/s.py", "ServerS"],["w/w.py", "ServerW"],["p/p.py", "ServerP"]]
-
-For SS in ServicesAndServers:
-	executeService(path_dest + SS[0], SS[1])
+for SaS in ServicesAndServers:
+	executeService(path_dest + SaS[0], SaS[1])
+	
+executeService(path_dest + "openStack-master/TemplateServerM/serverM.py", "ServerM")	
