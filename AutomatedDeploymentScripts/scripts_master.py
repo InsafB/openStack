@@ -28,6 +28,16 @@ def executeService(fileName, dest):
 	command = "python " + fileName
 	commands = [command]
 	exec_commands(commands,dest)
+	
+	
+def install_mysql(server):
+	commands=["sudo apt-get update","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password othmane'","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password othmane'","sudo apt-get -y install mysql-server"]
+	exec_commands(commands,server)
+
+
+install_mysql("ServerI")
+install_mysql("ServerS")
+
 
 path_services = "~/openStack/Services/"
 dependencies = "scripts_dependencies.sh"
