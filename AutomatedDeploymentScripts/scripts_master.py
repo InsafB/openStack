@@ -1,3 +1,7 @@
+import os
+import paramiko
+import time
+
 def exec_commands(commands,server):
 	client = paramiko.SSHClient()
 	client.load_system_host_keys()
