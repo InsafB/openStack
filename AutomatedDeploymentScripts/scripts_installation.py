@@ -40,7 +40,7 @@ def createRouter(router_name):
 	print("Create Router: Execution Completed")
 	return router_id
 
-def createPort(port_name,router_id,subnet_id):
+def createPort(router_id,subnet_id):
 	print("Adding the interface\n")
 	os.system('neutron router-interface-add '+router_id+' '+subnet_id)
 	print(response)
@@ -168,7 +168,7 @@ network_id, subnet_id = createNetwork('private_network')
 print("Creation of router")
 router_id = createRouter('router_project')
 print("Creation of port")
-createPort('port_project',router_id,subnet_id)
+createPort(router_id,subnet_id)
 #network_id = "9e6b3047-e5b8-4be8-ad64-b5b6155328cf"
 
 print("Creation of VMs")
