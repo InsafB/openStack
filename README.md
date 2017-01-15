@@ -9,6 +9,6 @@
 `bash sendProject.sh ip_bastion`  
 4. Connect to Bastion :  
 `ssh ubuntu@ip_bastion`  
-5. Launch the installation scripts (dependencies + the whole environement)  
+5. Launch the installation scripts
 `cd ~/openStack-master/`  
-`bash install.sh`  
+`bash install_all.sh`  
