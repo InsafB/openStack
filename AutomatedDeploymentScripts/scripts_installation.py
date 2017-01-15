@@ -129,6 +129,7 @@ def link_VM_FloatingIP(network_id,ServerName):
 def createVM_Master(network_id):
 	instance , ServerName = createVM("Master",network_id)
 	link_VM_FloatingIP(network_id,ServerName)
+	time.sleep(10)
 	appendHostLocal(instance.to_dict()['addresses']['private_network'][1]['addr'],ServerName)
 	print("Creation of ",ServerName," is done\n")
 
