@@ -182,7 +182,7 @@ createSwiftContainers(['containerPrices'])
 print("Sending the Master")
 
 # Sending the project and the needed files to the Master
-path = '~/openStack-master'
+path = '~/openStack-master/'
 path_dest = '~/'
 path_ssh = "~/.ssh/"
 
@@ -193,5 +193,5 @@ sendObject(path+"config", "ServerMaster", path_ssh)
 sendObject(path+"project9-openrc.sh", "ServerMaster", path_dest)
 
 print("Execution of dependencies and scripts_master on the ServerMaster")
-commands = ["bash ~/openStack/AutomatedDeploymentScripts/scripts_dependencies.sh","python ~/openStack/AutomatedDeploymentScripts/scripts_master.py"]
+commands = ["bash ~/openStack-master/AutomatedDeploymentScripts/scripts_dependencies.sh","python ~/openStack-master/AutomatedDeploymentScripts/scripts_master.py"]
 exec_commands(commands,"ServerMaster")
