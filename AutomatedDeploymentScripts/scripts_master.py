@@ -15,8 +15,7 @@ def exec_commands(commands,server):
 		
 def sendObject(path, dest, path_dest):
 	command = "scp -r " + path + " ubuntu@"  + dest + ":" + path_dest
-	commands = [command]
-	exec_commands(commands,dest)
+	os.system(command)
 
 def sendAndExecuteDependencies(path_dependencies, dest, path_dest):
 	command1 = "scp -r " + path_dependencies + " ubuntu@" + dest + ":" + path_dest
