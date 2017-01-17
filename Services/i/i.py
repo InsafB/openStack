@@ -1,4 +1,6 @@
 from flask import Flask,render_template, request
+import pymysql
+pymysql.install_as_MySQLdb()
 import MySQLdb
 import json
 
