@@ -45,15 +45,17 @@ def sendIPs(ServerName,dest):
 install_mysql("ServerI")
 install_mysql("ServerS")
 
-
-path_services = "~/openStack-master/Services/"
 dependencies = "scripts_dependencies.sh"
+path_services = "~/openStack-master/Services/"
+path_scripts = "~/openStack-master/AutomatedDeploymentScripts/"
 path_dependencies = "~/openStack-master/AutomatedDeploymentScripts/" + dependencies
 path_dest = "~/"
 
 ObjectsAndServers = [["b", "ServerB"],["i", "ServerI"],["s", "ServerS"],["w", "ServerW"],["p", "ServerP"]]
 for OaS in ObjectsAndServers:	
 	sendObject(path_services + OaS[0], OaS[1], path_dest + OaS[0])
+	sendObject("~/openStack-master/project9-openrc.sh", OaS[1], path_dest + OaS[0])
+	sendObject(path_scripts+"credentials.py", OaS[1], path_dest + OaS[0])
 
 Servers = ["ServerB", "ServerI", "ServerS", "ServerW", "ServerP"]
 for Server in Servers:
