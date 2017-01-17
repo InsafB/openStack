@@ -42,6 +42,12 @@ else
     echo "flask installation failed"
 fi
 
+if sudo pip3 install Flask-Mail ; then
+    echo "flask-mail installation succeeded"
+else
+    echo "flask-mail installation failed"
+fi
+
 if sudo pip3 install pymysql ; then
     echo "pymysql installation succeeded"
 else
