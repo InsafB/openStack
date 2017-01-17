@@ -129,6 +129,7 @@ def link_VM_FloatingIP(network_id,ServerName):
 def createVM_Master(network_id):
 	instance , ServerName = createVM("Master",network_id)
 	link_VM_FloatingIP(network_id,ServerName)
+	nova_client = getNovaClient()
 	instance = nova_client.servers.find(name=ServerName)
 	while len(instance.to_dict()['addresses']['private_network']) < 2:
 		time.sleep(1)
