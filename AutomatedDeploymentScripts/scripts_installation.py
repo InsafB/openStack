@@ -147,8 +147,7 @@ def createVM_W(network_id):
 
 def sendObject(path, dest, path_dest):
 	command = "scp -r " + path + " ubuntu@"  + dest + ":" + path_dest
-	commands = [command]
-	exec_commands(commands,dest)
+	os.system(command)
 	   
 ## Main 
 print("Creation of network")
