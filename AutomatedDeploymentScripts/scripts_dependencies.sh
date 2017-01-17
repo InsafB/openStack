@@ -1,5 +1,7 @@
 #!/bin/sh
 
+source project9-openrc.sh
+
 export LC_ALL=C
 
 sudo apt-get update
