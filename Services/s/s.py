@@ -1,5 +1,7 @@
 from flask import Flask,render_template,request
 import socket
+import pymysql
+pymysql.install_as_MySQLdb()
 import MySQLdb
 import time
 import datetime
