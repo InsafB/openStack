@@ -1,6 +1,7 @@
 import os
 import paramiko
 import time
+import socket
 
 def exec_commands(commands,server):
 	client = paramiko.SSHClient()
@@ -20,7 +21,8 @@ def sendObject(path, dest, path_dest):
 def sendAndExecuteDependencies(path_dependencies, dest, path_dest):
 	command1 = "scp -r " + path_dependencies + " ubuntu@" + dest + ":" + path_dest
 	command2 = "bash " + dependencies
-	commands = [command1, command2]
+	os.system(command1)
+	commands = [command2]
 	exec_commands(commands,dest)
 
 def executeService(fileName, dest):
@@ -64,7 +66,7 @@ for Server in Servers:
 
 ServicesAndServers = [["b/b.py", "ServerB"],["i/i.py", "ServerI"],["s/s.py", "ServerS"],["w/w.py", "ServerW"],["p/p.py", "ServerP"]]
 for SaS in ServicesAndServers:
-	#exec_commands(['source project9-openrc.sh'],SaS[1])
-	#executeService(path_dest + SaS[0], SaS[1])
+	exec_commands(['source project9-openrc.sh'],SaS[1])
+	executeService(path_dest + SaS[0], SaS[1])
 	
-#executeService(path_dest + "openStack-master/TemplateServerM/serverM.py", "ServerM")	
+executeService(path_dest + "openStack-master/TemplateServerM/serverM.py", "ServerM")	
