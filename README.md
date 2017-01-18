@@ -11,4 +11,4 @@
 `ssh ubuntu@ip_bastion`  
 5. Launch the installation scripts :  
 `cd ~/openStack-master/`  
-`bash install_all.sh openrc_file_name` ("project9-openrc.sh" in this case)    
+`bash install_all.sh openrc_file_name dns_address` ("project9-openrc.sh" and "10.11.50.1" in this case)   
