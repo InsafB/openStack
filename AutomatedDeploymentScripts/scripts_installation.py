@@ -20,7 +20,7 @@ def createNetwork(network_name):
 		network_dict = network['network']
 		network_id = network_dict['id']
 		print('Network %s has been successfuly created' % network_id)
-		body_create_subnet = {'subnets': [{'name':'private_subnet_project','cidr': '10.0.2.0/24','ip_version': 4,'gateway_ip': '10.0.2.254', 'dns_nameservers': ['10.11.50.1'], 'network_id': network_id}]}
+		body_create_subnet = {'subnets': [{'name':'private_subnet_project','cidr': '10.0.2.0/24','ip_version': 4,'gateway_ip': '10.0.2.254', 'dns_nameservers': [sys.argv[1]], 'network_id': network_id}]}
 		subnet = neutron.create_subnet(body=body_create_subnet)
 		print('SubNetwork %s has been successfuly created' % subnet)
 	finally:
