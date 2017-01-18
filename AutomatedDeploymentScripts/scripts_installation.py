@@ -193,5 +193,5 @@ sendObject(path+"config", "ServerMaster", path_ssh)
 sendObject(path+"project9-openrc.sh", "ServerMaster", path_dest)
 
 print("Execution of dependencies and scripts_master on the ServerMaster")
-commands = ["bash ~/openStack-master/AutomatedDeploymentScripts/scripts_dependencies.sh","python ~/openStack-master/AutomatedDeploymentScripts/scripts_master.py"]
+commands = ["bash ~/openStack-master/AutomatedDeploymentScripts/scripts_dependencies.sh ServerMaster","python ~/openStack-master/AutomatedDeploymentScripts/scripts_master.py"]
 exec_commands(commands,"ServerMaster")
