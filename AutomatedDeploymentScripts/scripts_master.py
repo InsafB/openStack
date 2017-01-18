@@ -20,7 +20,7 @@ def sendObject(path, dest, path_dest):
 
 def sendAndExecuteDependencies(path_dependencies, dest, path_dest):
 	command1 = "scp -r " + path_dependencies + " ubuntu@" + dest + ":" + path_dest
-	command2 = "bash " + dependencies
+	command2 = "bash " + dependencies + " " + dest
 	os.system(command1)
 	commands = [command2]
 	exec_commands(commands,dest)
@@ -69,4 +69,4 @@ for SaS in ServicesAndServers:
 	exec_commands(['source project9-openrc.sh'],SaS[1])
 	executeService(path_dest + SaS[0], SaS[1])
 	
-executeService(path_dest + "openStack-master/TemplateServerM/serverM.py", "ServerM")	
+executeService(path_dest + "openStack-master/TemplateServerM/serverM.py", "ServerM")
