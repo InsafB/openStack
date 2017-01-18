@@ -1,5 +1,7 @@
 #!/bin/bash
 
+serverName=$1
+
 source project9-openrc.sh
 
 export LC_ALL=C
@@ -12,7 +14,7 @@ else
     echo "python3-pip installation failed"
 fi
 
-if ("$1" = "ServerB" || "$1" = "ServerP") then
+if [[ ("$serverName" = "ServerB") || ("$serverName" = "ServerP") ]] then
     if sudo apt-get -y install python3-swiftclient ; then
         echo "swiftclient installation succeeded"
     else
@@ -26,7 +28,7 @@ else
     echo "flask installation failed"
 fi
 
-if ("$1" = "ServerM") then
+if [[ ("$serverName" = "ServerMaster") ]] then
     if sudo pip3 install Flask-Mail ; then
         echo "flask-mail installation succeeded"
     else
@@ -34,7 +36,7 @@ if ("$1" = "ServerM") then
     fi
 fi    
 
-if ("$1" = "ServerB" || "$1" = "ServerP") then
+if [[ ("$serverName" = "ServerB") || ("$serverName" = "ServerP") ]] then
     if sudo pip3 install pymysql ; then
         echo "pymysql installation succeeded"
     else
@@ -42,7 +44,7 @@ if ("$1" = "ServerB" || "$1" = "ServerP") then
     fi
 fi    
 
-if ("$1" = "ServerW") then
+if [[ ("$serverName" = "ServerW") ]] then
     wget http://www.imagemagick.org/download/ImageMagick.tar.gz
     tar -xvf ImageMagick.tar.gz
     cd ImageMagick-7.*
