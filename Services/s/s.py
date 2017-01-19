@@ -3,7 +3,7 @@ import socket
 import pymysql
 pymysql.install_as_MySQLdb()
 import MySQLdb
-import time
+import time as Time
 import datetime
 import json
 
@@ -34,7 +34,7 @@ def saveUser():
     db = MySQLdb.connect(host=ServerS, user="root", passwd="othmane", db="open_stack")
     cur = db.cursor()
     user_id = request.args.get('user_id')
-    ts = time.time()
+    ts = Time.time()
     time = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
     cur.execute("""INSERT INTO plays VALUES (%s, %s);""", (user_id,time))
     db.commit()
