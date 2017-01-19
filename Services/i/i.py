@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route('/',methods=['GET', 'POST'])
 def identification():
 	# Database config
-	db = MySQLdb.connect(host=ServerI, user="root", passwd="othmane", db="open_stack")
+	db = MySQLdb.connect(host='ServerI', user="root", passwd="othmane", db="open_stack")
 	cur = db.cursor()
 	# Get master request with user_id
 	user_id = request.args.get('user_id')
@@ -31,4 +31,4 @@ def identification():
 
 if __name__ == '__main__':
 	#app.run(host = socket.gethostbyname(socket.gethostname()), port=80)
-	app.run(host = ServerI, port=80)
+	app.run(host='ServerI', port=80)
