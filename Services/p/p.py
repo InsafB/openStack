@@ -13,9 +13,11 @@ def getImage():
 		#image = "images/"+str(user_id)+".jpg"
 		image = str(user_id)+".jpg"
 		#print("*******Image:", image)
-		swiftimage = getImageSwift(image, "ContainerB")
-		return send_file(swiftimage, mimetype='image/jpg')
-    	except FileNotFoundError:
+		swiftimage = getPicture(image, "ContainerPrices")
+		with open('static/image.jpg', 'wb') as my_picture:
+			my_picture.write(swiftimage[1])
+		return send_file("static/image.jpg", mimetype='image/jpg')
+    	except:
         	return "NoFile"
 
 def getSwiftConn():
