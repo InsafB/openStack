@@ -3,6 +3,7 @@ import paramiko
 import time
 import socket
 import sys
+from threadingFunc import FuncThread
 
 def exec_commands(commands,server):
 	client = paramiko.SSHClient()
@@ -44,8 +45,15 @@ def sendIPs(ServerName,dest):
 	ip = socket.gethostbyname(ServerName)
 	appendHost(ip,ServerName,dest)
 	
-install_mysql("ServerI")
-install_mysql("ServerS")
+#install_mysql("ServerI")
+tSQL1 = FuncThread(install_mysql,"ServerI")
+tSQL1.start()
+#install_mysql("ServerS")
+tSQL2 = FuncThread(install_mysql,"ServerS")
+tSQL2.start()
+
+tSQL1.join()
+tSQL2.join()
 
 dependencies = "scripts_dependencies.sh"
 path_services = "~/openStack-master/Services/"
