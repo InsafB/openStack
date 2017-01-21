@@ -26,7 +26,7 @@ def playLaunch():
         with open(image_name, "wb") as fh:
             fh.write(base64.decodestring(image))
         # Save image in swift
-        puchImageSwift(image_name,user_id+".jpg","containerB")
+        puchImageSwift(image_name,str(user_id)+".jpg","ContainerPrices")
         #delete tmp file
         os.remove(image_name)
         print("*********Service B: Image added**********")
