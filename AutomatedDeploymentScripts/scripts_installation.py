@@ -5,7 +5,6 @@ import credentials
 from neutronclient.v2_0 import client
 from swiftclient.client import Connection, ClientException
 from credentials import *
-from utils import *
 import time
 import sys
 from threadingFunc import FuncThread
