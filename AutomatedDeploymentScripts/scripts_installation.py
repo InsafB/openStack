@@ -191,7 +191,7 @@ sendObject(path, "ServerMaster", path_dest)
 sendObject(path_ssh+"id_rsa", "ServerMaster", path_ssh)
 sendObject(path_ssh+"id_rsa.pub", "ServerMaster", path_ssh)
 sendObject(path+"config", "ServerMaster", path_ssh)
-sendObject(path+sys.argv[2], "ServerMaster", path_dest)
+sendObject(path+sys.argv[1], "ServerMaster", path_dest)
 
 print("Execution of dependencies and scripts_master on the ServerMaster")
 commands = ["bash ~/openStack-master/AutomatedDeploymentScripts/scripts_dependencies.sh ServerMaster","python ~/openStack-master/AutomatedDeploymentScripts/scripts_master.py"]
