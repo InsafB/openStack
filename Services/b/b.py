@@ -22,7 +22,7 @@ def playLaunch():
         byte = json.loads(response.text)
         image = bytes(byte['img'], 'ascii')
         ###print("***Service B: image content before insert", image)
-        image_name = "images/"+str(user_id)+".jpg"
+        image_name = str(user_id)+".jpg"
         with open(image_name, "wb") as fh:
             fh.write(base64.decodestring(image))
         # Save image in swift
