@@ -195,7 +195,14 @@ t6.join()
 
 time.sleep(2)
 print("Set-up of DNS")
-set_dns()
+
+while True:
+    try:
+	set_dns()
+        break
+    except:    
+        time.sleep(1)
+
 
 print("Creation of Containers")
 createSwiftContainers(['containerPrices'])
