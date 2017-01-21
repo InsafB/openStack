@@ -1,8 +1,9 @@
 #!/bin/bash
 
 serverName=$1
+sourcefile=$2
 
-source project9-openrc.sh
+source ~/openStack-master/$sourcefile
 
 export LC_ALL=C
 
