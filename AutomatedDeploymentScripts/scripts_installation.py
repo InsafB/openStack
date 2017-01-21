@@ -7,6 +7,7 @@ from swiftclient.client import Connection, ClientException
 from credentials import *
 from utils import *
 import time
+import sys
 
 DNS = {} 
 
