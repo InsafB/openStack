@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route("/",methods=['GET', 'POST'])
 def lookupUser():
-    db = MySQLdb.connect(host="ServerS", user="root", passwd="othmane", db="open_stack")
+    db = MySQLdb.connect(host="localhost", user="root", passwd="othmane", db="open_stack")
     cur = db.cursor()
     user_id = request.args.get('user_id')    
     cur.execute("SELECT timeplay FROM plays WHERE id = %s;", [user_id])
@@ -31,7 +31,7 @@ def lookupUser():
 
 @app.route("/save",methods=['GET', 'POST'])
 def saveUser():
-    db = MySQLdb.connect(host="ServerS", user="root", passwd="othmane", db="open_stack")
+    db = MySQLdb.connect(host="localhost", user="root", passwd="othmane", db="open_stack")
     cur = db.cursor()
     user_id = request.args.get('user_id')
     ts = Time.time()
