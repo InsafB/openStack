@@ -2,6 +2,7 @@ import os
 import paramiko
 import time
 import socket
+import sys
 
 def exec_commands(commands,server):
 	client = paramiko.SSHClient()
@@ -55,7 +56,7 @@ path_dest = "~/"
 ObjectsAndServers = [["b", "ServerB"],["i", "ServerI"],["s", "ServerS"],["w", "ServerW"],["p", "ServerP"]]
 for OaS in ObjectsAndServers:	
 	sendObject(path_services + OaS[0], OaS[1], path_dest + OaS[0])
-	sendObject("~/openStack-master/project9-openrc.sh", OaS[1], path_dest + OaS[0])
+	sendObject("~/openStack-master/"+sys.argv[1], OaS[1], path_dest + OaS[0])
 	sendObject(path_scripts+"credentials.py", OaS[1], path_dest + OaS[0])
 
 Servers = ["ServerB", "ServerI", "ServerS", "ServerW", "ServerP"]
@@ -66,7 +67,7 @@ for Server in Servers:
 
 ServicesAndServers = [["b/b.py", "ServerB"],["i/i.py", "ServerI"],["s/s.py", "ServerS"],["w/w.py", "ServerW"],["p/p.py", "ServerP"]]
 for SaS in ServicesAndServers:
-	exec_commands(['source project9-openrc.sh'],SaS[1])
+	exec_commands(["source "+sys.argv[1]],SaS[1])
 	executeService(path_dest + SaS[0], SaS[1])
 	
 executeService(path_dest + "openStack-master/TemplateServerM/serverM.py", "ServerM")
