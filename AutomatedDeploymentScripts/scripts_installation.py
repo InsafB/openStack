@@ -193,6 +193,7 @@ t4.join()
 t5.join()
 t6.join()
 
+time.sleep(2)
 print("Set-up of DNS")
 set_dns()
 
