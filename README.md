@@ -6,7 +6,7 @@
 2. Get the "sendProject.sh" file.  
 3. Execute :   
 `cd path_to_project`  
-`bash sendProject.sh ip_bastion rsa_priv rsa_pub`  
+`bash sendProject.sh ip_bastion rsa_priv rsa_pub` (rsa links)  
 4. Connect to Bastion :  
 `ssh ubuntu@ip_bastion`  
 5. Launch the installation scripts :  
