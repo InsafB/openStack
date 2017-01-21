@@ -40,6 +40,11 @@ if [[ ("$serverName" = "ServerMaster") ]]; then
     else
         echo "python installation failed"
     fi
+    if sudo apt-get -y install python-paramiko ; then
+        echo "paramiko installation succeeded"
+    else
+        echo "paramiko installation failed"
+    fi
 fi    
 
 if [[ ("$serverName" = "ServerB") || ("$serverName" = "ServerP") ]]; then
