@@ -197,11 +197,11 @@ time.sleep(2)
 print("Set-up of DNS")
 
 while True:
-    try:
-	set_dns()
-        break
-    except:    
-        time.sleep(1)
+	try:
+		set_dns()
+		break
+	except:    
+		time.sleep(1)
 
 
 print("Creation of Containers")
