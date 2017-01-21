@@ -8,6 +8,7 @@ from credentials import *
 from utils import *
 import time
 import sys
+from threadingFunc import FuncThread
 
 DNS = {} 
 
@@ -161,17 +162,37 @@ createPort(router_id,subnet_id)
 
 print("Creation of VMs")
 print("Creation of Master")
-createVM_Master(network_id)
+#createVM_Master(network_id)
+t1 = FuncThread(createVM_Master,network_id)
+t1.start()
 print("Creation of I")
-createVM_I(network_id)
+#createVM_I(network_id)
+t2 = FuncThread(createVM_I,network_id)
+t2.start()
 print("Creation of S")
-createVM_S(network_id)
+#createVM_S(network_id)
+t3 = FuncThread(createVM_S,network_id)
+t3.start()
 print("Creation of B")
-createVM_B(network_id)
+#createVM_B(network_id)
+t4 = FuncThread(createVM_B,network_id)
+t4.start()
 print("Creation of P")
-createVM_P(network_id)
+#createVM_P(network_id)
+t5 = FuncThread(createVM_P,network_id)
+t5.start()
 print("Creation of W")
-createVM_W(network_id)
+#createVM_W(network_id)
+t6 = FuncThread(createVM_W,network_id)
+t6.start()
+
+
+t1.join()
+t2.join()
+t3.join()
+t4.join()
+t5.join()
+t6.join()
 
 print("Set-up of DNS")
 set_dns()
