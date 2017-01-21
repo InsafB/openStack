@@ -36,9 +36,9 @@ if [[ ("$serverName" = "ServerMaster") ]]; then
         echo "flask-mail installation failed"
     fi
     if sudo apt-get -y install python ; then
-        echo "flask-mail installation succeeded"
+        echo "python installation succeeded"
     else
-        echo "flask-mail installation failed"
+        echo "python installation failed"
     fi
 fi    
 
