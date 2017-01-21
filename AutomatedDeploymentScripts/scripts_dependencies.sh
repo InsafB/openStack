@@ -15,7 +15,7 @@ else
     echo "python3-pip installation failed"
 fi
 
-if [[ ("$serverName" = "ServerB") || ("$serverName" = "ServerP") ]] then
+if [[ ("$serverName" = "ServerB") || ("$serverName" = "ServerP") ]]; then
     if sudo apt-get -y install python3-swiftclient ; then
         echo "swiftclient installation succeeded"
     else
@@ -29,7 +29,7 @@ else
     echo "flask installation failed"
 fi
 
-if [[ ("$serverName" = "ServerMaster") ]] then
+if [[ ("$serverName" = "ServerMaster") ]]; then
     if sudo pip3 install Flask-Mail ; then
         echo "flask-mail installation succeeded"
     else
@@ -37,7 +37,7 @@ if [[ ("$serverName" = "ServerMaster") ]] then
     fi
 fi    
 
-if [[ ("$serverName" = "ServerB") || ("$serverName" = "ServerP") ]] then
+if [[ ("$serverName" = "ServerB") || ("$serverName" = "ServerP") ]]; then
     if sudo pip3 install pymysql ; then
         echo "pymysql installation succeeded"
     else
@@ -45,7 +45,7 @@ if [[ ("$serverName" = "ServerB") || ("$serverName" = "ServerP") ]] then
     fi
 fi    
 
-if [[ ("$serverName" = "ServerW") ]] then
+if [[ ("$serverName" = "ServerW") ]]; then
     sudo apt-get install libmagickwand-dev
     sudo apt-get install libmagickcore5-extra 
     wget http://www.imagemagick.org/download/ImageMagick.tar.gz
