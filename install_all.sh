@@ -4,4 +4,4 @@ bash AutomatedDeploymentScripts/initial_dependencies.sh
 
 source $1
 
-python AutomatedDeploymentScripts/scripts_installation.py $2
+python AutomatedDeploymentScripts/scripts_installation.py $1 $2 
