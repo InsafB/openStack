@@ -45,14 +45,16 @@ if [[ ("$serverName" = "ServerB") || ("$serverName" = "ServerP") ]] then
 fi    
 
 if [[ ("$serverName" = "ServerW") ]] then
+    sudo apt-get install libmagickwand-dev
+    sudo apt-get install libmagickcore5-extra 
     wget http://www.imagemagick.org/download/ImageMagick.tar.gz
     tar -xvf ImageMagick.tar.gz
-    cd ImageMagick-7.*
-    ./configure
+    cd ImageMagick-7.* 
+    ./configure 
     make
     if sudo make install ; then
+        sudo ldconfig /usr/local/lib
         echo "MagikImage installation succeeded"
-        sudo ldconfig /usr/local/lib 
     else
         echo "MagikImage installation failed"
     fi
