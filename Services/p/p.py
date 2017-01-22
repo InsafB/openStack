@@ -29,4 +29,4 @@ def getPicture(pictureToGet,containerName):
 	return picture
 
 if __name__ == '__main__':
-	app.run(host = "ServerP", port=80)
+	app.run(host = "ServerP", port=5000)
