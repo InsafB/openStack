@@ -17,8 +17,8 @@ def getImage():
 		with open('static/image.jpg', 'wb') as my_picture:
 			my_picture.write(swiftimage[1])
 		return send_file("static/image.jpg", mimetype='image/jpg')
-    	except:
-        	return "NoFile"
+	except:
+		return "NoFile"
 
 def getSwiftConn():
 	return Connection(**get_session_credentials())
