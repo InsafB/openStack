@@ -56,8 +56,8 @@ if [[ ("$serverName" = "ServerI") || ("$serverName" = "ServerS") ]]; then
 fi    
 
 if [[ ("$serverName" = "ServerW") ]]; then
-    sudo apt-get install libmagickwand-dev
-    sudo apt-get install libmagickcore5-extra 
+    sudo apt-get -y install libmagickwand-dev
+    sudo apt-get -y install libmagickcore5-extra 
     wget http://www.imagemagick.org/download/ImageMagick.tar.gz
     tar -xvf ImageMagick.tar.gz
     cd ImageMagick-7.* 
