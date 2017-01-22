@@ -131,7 +131,7 @@ def CallS(idu):
 	return response
 
 def CallB(idu):
-	url = 'http://ServerB:80'
+	url = 'http://ServerB:5000'
 	param_user = {'user_id': idu}
 	button = requests.get(url, params=param_user)	
 	return button
