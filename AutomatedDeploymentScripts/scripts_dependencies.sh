@@ -53,9 +53,12 @@ if [[ ("$serverName" = "ServerI") || ("$serverName" = "ServerS") ]]; then
     else
         echo "pymysql installation failed"
     fi
-    
-    mysql -u root -pothmane -e "create database open_stack;use open_stack;create table users(id int(11) primary key,first_name varchar(255),last_name varchar(255),email varchar(255))"
-    mysql -u root -pothmane -e "use open_stack;create table plays(id int(11) primary key,timeplay datetime)"
+    if [[ ("$serverName" = "ServerI") ]]; then
+        mysql -u root -pothmane -e "create database open_stack;use open_stack;create table users(id int(11) primary key,first_name varchar(255),last_name varchar(255),email varchar(255))"
+    fi
+    if [[ ("$serverName" = "ServerS") ]]; then
+        mysql -u root -pothmane -e "create database open_stack;use open_stack;create table plays(id int(11) primary key,timeplay datetime)"
+    fi
 fi    
 
 if [[ ("$serverName" = "ServerW") ]]; then
