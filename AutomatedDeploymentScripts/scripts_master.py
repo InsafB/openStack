@@ -28,7 +28,7 @@ def sendAndExecuteDependencies(path_dependencies, dest, path_dest):
 	exec_commands(commands,dest)
 
 def executeService(fileName, dest):
-	command = "python " + fileName
+	command = "python3 " + fileName
 	commands = [command]
 	exec_commands(commands,dest)	
 	
