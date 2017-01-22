@@ -55,7 +55,7 @@ if [[ ("$serverName" = "ServerI") || ("$serverName" = "ServerS") ]]; then
     fi
     
     mysql -u root -pothmane -e "create database open_stack;use open_stack;create table users(id int(11) primary key,first_name varchar(255),last_name varchar(255),email varchar(255))"
-    mysql -u root -pothmane -e "use open_stack;create table users(id int(11) primary key,timeplay datetime)"
+    mysql -u root -pothmane -e "use open_stack;create table plays(id int(11) primary key,timeplay datetime)"
 fi    
 
 if [[ ("$serverName" = "ServerW") ]]; then
