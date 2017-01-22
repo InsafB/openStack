@@ -143,4 +143,4 @@ def CallP(idu):
 	return image
 
 if __name__ == "__main__":
-	app.run(host=ServerM, port=80)
+	app.run(host="ServerMaster", port=80)
