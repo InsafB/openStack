@@ -205,7 +205,7 @@ while True:
 
 
 print("Creation of Containers")
-createSwiftContainers(['containerPrices'])
+createSwiftContainers(['ContainerPrices'])
 
 # set a list of sending commands
 print("Sending the Master")
