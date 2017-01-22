@@ -2,6 +2,7 @@ from flask import Flask, request, send_file
 import requests
 from swiftclient.client import Connection, ClientException
 from credentials import *
+import os
 
 app = Flask(__name__)
 
@@ -14,6 +15,8 @@ def getImage():
 		image = str(user_id)+".jpg"
 		#print("*******Image:", image)
 		swiftimage = getPicture(image, "ContainerPrices")
+		if not os.path.exists("static"):
+			os.makedirs("static")
 		with open('static/image.jpg', 'wb') as my_picture:
 			my_picture.write(swiftimage[1])
 		return send_file("static/image.jpg", mimetype='image/jpg')
@@ -29,4 +32,4 @@ def getPicture(pictureToGet,containerName):
 	return picture
 
 if __name__ == '__main__':
-	app.run(host = "ServerP", port=5000)
+	app.run(host = "ServerP", port=80)
