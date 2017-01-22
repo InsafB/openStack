@@ -47,7 +47,7 @@ if [[ ("$serverName" = "ServerMaster") ]]; then
     fi
 fi    
 
-if [[ ("$serverName" = "ServerB") || ("$serverName" = "ServerP") ]]; then
+if [[ ("$serverName" = "ServerI") || ("$serverName" = "ServerS") ]]; then
     if sudo pip3 install pymysql ; then
         echo "pymysql installation succeeded"
     else
