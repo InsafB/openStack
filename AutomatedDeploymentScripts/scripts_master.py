@@ -67,11 +67,27 @@ for OaS in ObjectsAndServers:
 	sendObject("~/openStack-master/"+sys.argv[1], OaS[1], path_dest + OaS[0])
 	sendObject(path_scripts+"credentials.py", OaS[1], path_dest + OaS[0])
 
+t1 = FuncThread(sendAndExecuteDependencies,path_dependencies, "ServerB", path_dest)
+t1.start()
+t2 = FuncThread(sendAndExecuteDependencies,path_dependencies, "ServerI", path_dest)
+t2.start()
+t3 = FuncThread(sendAndExecuteDependencies,path_dependencies, "ServerS", path_dest)
+t3.start()
+t4 = FuncThread(sendAndExecuteDependencies,path_dependencies, "ServerW", path_dest)
+t4.start()
+t5 = FuncThread(sendAndExecuteDependencies,path_dependencies, "ServerP", path_dest)
+t5.start()
+
+t1.join()
+t2.join()
+t3.join()
+t4.join()
+t5.join()
+
 Servers = ["ServerB", "ServerI", "ServerS", "ServerW", "ServerP"]
-for Server in Servers:
-	sendAndExecuteDependencies(path_dependencies, Server, path_dest)
-	for ServerName in Servers:
-		sendIPs(ServerName,Server)
+for Server1 in Servers:
+	for Server2 in Servers:
+		sendIPs(Server2,Server1)
 
 ServicesAndServers = [["b/b.py", "ServerB"],["i/i.py", "ServerI"],["s/s.py", "ServerS"],["w/w.py", "ServerW"],["p/p.py", "ServerP"]]
 for SaS in ServicesAndServers:
