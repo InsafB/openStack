@@ -137,7 +137,7 @@ def CallB(idu):
 	return button
 
 def CallP(idu):
-	url = 'http://ServerP:80'
+	url = 'http://ServerP:5000'
 	param_user = {'user_id': idu}
 	image = requests.get(url, params=param_user)	
 	return image
