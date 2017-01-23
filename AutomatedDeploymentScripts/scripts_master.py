@@ -15,6 +15,15 @@ def exec_commands(commands,server):
 		client_stdin, client_stdout, client_stderr = client.exec_command(cmd);
 		exit_status = client_stdout.channel.recv_exit_status()
 		print "exit status for command '",cmd," is : ",exit_status
+
+def async_exec_commands(commands,server):
+	client = paramiko.SSHClient()
+	client.load_system_host_keys()
+	client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+	client.connect(server)    
+	for cmd in commands:
+		print "executing command : ",cmd
+		client_stdin, client_stdout, client_stderr = client.exec_command(cmd);
 		
 def sendObject(path, dest, path_dest):
 	command = "scp -r " + path + " ubuntu@"  + dest + ":" + path_dest
@@ -29,7 +38,7 @@ def sendAndExecuteDependencies(path_dependencies, dest, path_dest):
 
 def executeService(fileName, dest):
 	commands = ["sudo -s", "source "+sys.argv[1], "python3 " + fileName]
-	exec_commands(commands,dest)	
+	async_exec_commands(commands,dest)	
 	
 def install_mysql(server):
 	commands=["sudo apt-get update","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password othmane'","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password othmane'","sudo apt-get -y install mysql-server"]
