@@ -28,7 +28,7 @@ def sendAndExecuteDependencies(path_dependencies, dest, path_dest):
 	exec_commands(commands,dest)
 
 def executeService(fileName, dest):
-	command = "python3 " + fileName
+	command = ["sudo -s source "+sys.argv[1]+"; python3 " + fileName
 	commands = [command]
 	exec_commands(commands,dest)	
 	
@@ -91,7 +91,6 @@ for Server1 in Servers:
 
 ServicesAndServers = [["b/b.py", "ServerB"],["i/i.py", "ServerI"],["s/s.py", "ServerS"],["w/w.py", "ServerW"],["p/p.py", "ServerP"]]
 for SaS in ServicesAndServers:
-	exec_commands(["source "+sys.argv[1]],SaS[1])
 	executeService(path_dest + SaS[0], SaS[1])
 	
 executeService(path_dest + "openStack-master/TemplateServerM/serverM.py", "ServerM")
