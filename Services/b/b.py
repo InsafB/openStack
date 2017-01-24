@@ -8,6 +8,7 @@ import json
 import binascii
 from swiftclient.client import Connection, ClientException
 from credentials import *
+from script_email import *
 
 app = Flask(__name__)
 
@@ -39,6 +40,7 @@ def playLaunch():
         url = 'http://ServerS:80/save'
         payload = {'user_id': user_id}
         response = requests.get(url, params=payload)
+        send_simple_message(str(user_id))
         return "UserAdded"
     except requests.ConnectionError:
         return "S_out"    
