@@ -131,13 +131,13 @@ def CallS(idu):
 	return response
 
 def CallB(idu):
-	url = 'http://ServerB:5000'
+	url = 'http://ServerB:80'
 	param_user = {'user_id': idu}
 	button = requests.get(url, params=param_user)	
 	return button
 
 def CallP(idu):
-	url = 'http://ServerP:5000'
+	url = 'http://ServerP:80'
 	param_user = {'user_id': idu}
 	image = requests.get(url, params=param_user)	
 	return image
