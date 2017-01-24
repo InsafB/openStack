@@ -48,7 +48,7 @@
       <p>Button server unavailable</p>
       {% elif W_outofservice|string() == "yes" %}
       <p>Worker server unavailable</p>
-      {% elif hasplayed|string() == "no" and I_outofservice|string() == "no" %}
+      {% elif hasplayed|string() == "no" and I_outofservice|string() == "no" and S_outofservice|string() == "no" %}
       <input type="submit" value="Play" />
       {% else %}
       <input type="submit" value="Play" disabled/>
