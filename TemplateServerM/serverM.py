@@ -98,7 +98,7 @@ def CallServices(id):
 		hasplayed="dontknow"
 	
 	if P_outofservice=="no":
-		if responseP.content=="NoFile":
+		if type(responseP.content)=="byte" and responseP.content.decode("utf-8")=="NoFile":
 			hasplayed="no"
 		else:
 			with open("static/image.jpg", "wb") as fb:
