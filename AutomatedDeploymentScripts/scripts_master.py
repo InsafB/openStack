@@ -72,7 +72,7 @@ path_dest = "~/"
 ObjectsAndServers = [["b", "ServerB"],["i", "ServerI"],["s", "ServerS"],["w", "ServerW"],["p", "ServerP"]]
 for OaS in ObjectsAndServers:	
 	sendObject(path_services + OaS[0], OaS[1], path_dest + OaS[0])
-	sendObject("~/openStack-master/"+sys.argv[1], OaS[1], path_dest + OaS[0])
+	sendObject("~/openStack-master/"+sys.argv[1], OaS[1], path_dest)
 	sendObject(path_scripts+"credentials.py", OaS[1], path_dest + OaS[0])
 
 t1 = FuncThread(sendAndExecuteDependencies,path_dependencies, "ServerB", path_dest)
