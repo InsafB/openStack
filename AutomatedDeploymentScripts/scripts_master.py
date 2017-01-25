@@ -36,8 +36,8 @@ def sendAndExecuteDependencies(path_dependencies, dest, path_dest):
 	commands = [command2]
 	exec_commands(commands,dest)
 
-def executeService(fileName, dest):
-	commands = ["sudo -s source ~/"+sys.argv[1], "suso -s python3 " + fileName+"&"]
+def executeService(directory,fileName, dest):
+	commands = ["sudo -s source ~/"+sys.argv[1],"cd "+directory, "suso -s python3 " + fileName+"&"]
 	exec_commands(commands,dest)	
 	
 def install_mysql(server):
@@ -97,9 +97,9 @@ for Server1 in Servers:
 	for Server2 in Servers:
 		sendIPs(Server2,Server1)
 
-ServicesAndServers = [["b/b.py", "ServerB"],["i/i.py", "ServerI"],["s/s.py", "ServerS"],["w/w.py", "ServerW"],["p/p.py", "ServerP"]]
+ServicesAndServers = [["b","b.py", "ServerB"],["i","i.py", "ServerI"],["s","s.py", "ServerS"],["w","w.py", "ServerW"],["p","p.py", "ServerP"]]
 for SaS in ServicesAndServers:
-	executeService(path_dest + SaS[0], SaS[1])
+	executeService(path_dest + SaS[0],SaS[1], SaS[2])
 	
-commandsM = ["sudo -s", "source ~/openStack-master/"+sys.argv[1], "python3 ~/openStack-master/TemplateServerM/serverM.py"]
-async_exec_commands(commandsM,"ServerMaster")
+commandsM = ["sudo -s source ~/openStack-master/"+sys.argv[1],"cd ~/openStack-master/TemplateServerM", "sudo -s python3 ~/openStack-master/TemplateServerM/serverM.py&"]
+exec_commands(commandsM,"ServerMaster")
