@@ -37,7 +37,7 @@ def sendAndExecuteDependencies(path_dependencies, dest, path_dest):
 	exec_commands(commands,dest)
 
 def executeService(directory,fileName, dest):
-	commands = ["sudo -s source ~/"+sys.argv[1],"cd "+directory, "sudo -s python3 " + fileName+"&"]
+	commands = ["cd "+directory+";sudo bash -c 'source ~/"+sys.argv[1]+"; python3 " + fileName+"&'"]
 	exec_commands(commands,dest)	
 	
 def install_mysql(server):
@@ -101,5 +101,5 @@ ServicesAndServers = [["b","b.py", "ServerB"],["i","i.py", "ServerI"],["s","s.py
 for SaS in ServicesAndServers:
 	executeService(path_dest + SaS[0],SaS[1], SaS[2])
 	
-commandsM = ["sudo -s source ~/openStack-master/"+sys.argv[1],"cd ~/openStack-master/TemplateServerM", "sudo -s python3 ~/openStack-master/TemplateServerM/serverM.py&"]
+commandsM = ["cd ~/openStack-master/TemplateServerM","sudo bash -c 'source ~/openStack-master/"+sys.argv[1]+"; python3 ~/openStack-master/TemplateServerM/serverM.py&'"]
 exec_commands(commandsM,"ServerMaster")
