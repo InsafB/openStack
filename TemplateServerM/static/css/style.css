@@ -7,23 +7,18 @@ body {
 .login-header {
   margin: 10px 20% 0px;
   padding: 20px;
-  background: #2094ba;;
+  background: #C0C0C0;;
 }
-.login-header h1 {
+ h1 {
   cursor: default;
   color: #fff;
-  font-size: 3em;
+  font-size: 2em;
   opacity: 1;
-  font-family: 'Lily Script One', cursive;
+  font-family: 'Monospace', cursive;
 }
-   h1 {
-  color: #fff;
-  font-size: 1em;
-  opacity: 1;
-  font-family: 'Lily Script One', cursive;
-}
+   
 .login-header p {
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family:  sans-serif;
   cursor: pointer;
   position: absolute;
   right: 20%;
@@ -59,7 +54,6 @@ body {
   border: none;
   color: #fff;
   font-size: 1.5em;
-  cursor: pointer;
   font-family: 'Open Sans Condensed', sans-serif;
 }
 .login-form a {
