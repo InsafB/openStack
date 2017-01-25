@@ -102,4 +102,4 @@ for SaS in ServicesAndServers:
 	executeService(path_dest + SaS[0], SaS[1])
 	
 commandsM = ["sudo -s", "source ~/openStack-master/"+sys.argv[1], "python3 ~/openStack-master/TemplateServerM/serverM.py"]
-async_exec_commands(commandsM,"ServerM")
+async_exec_commands(commandsM,"ServerMaster")
