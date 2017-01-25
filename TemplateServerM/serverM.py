@@ -43,7 +43,7 @@ def PlayButton():
 		msg = Message('Notification: Promotional lottery-Open Stack',
 			sender = 'test.apps.email.2017@gmail.com', recipients = ['ouiame.aitelkadi@gmail.com'])
 		msg.body = "Hello, the user "+str(user_id)+" has just played. \nTeam."
-		mail.send(msg)
+		#mail.send(msg)
 		#print("**ResponseB:", type(responseB.content.decode("utf-8")), responseB.content )
 		if str(responseB.content.decode("utf-8"))=="W_out":
 			W_outofservice="yes"
