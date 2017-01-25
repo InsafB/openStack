@@ -38,7 +38,7 @@ def sendAndExecuteDependencies(path_dependencies, dest, path_dest):
 
 def executeService(fileName, dest):
 	commands = ["sudo -s source ~/"+sys.argv[1], "suso -s python3 " + fileName+"&"]
-	async_exec_commands(commands,dest)	
+	exec_commands(commands,dest)	
 	
 def install_mysql(server):
 	commands=["sudo apt-get update","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password othmane'","sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password othmane'","sudo apt-get -y install mysql-server"]
