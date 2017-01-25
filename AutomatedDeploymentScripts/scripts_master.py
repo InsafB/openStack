@@ -37,7 +37,7 @@ def sendAndExecuteDependencies(path_dependencies, dest, path_dest):
 	exec_commands(commands,dest)
 
 def executeService(fileName, dest):
-	commands = ["sudo -s", "source "+sys.argv[1], "python3 " + fileName]
+	commands = ["sudo -s source ~/"+sys.argv[1], "suso -s python3 " + fileName+"&"]
 	async_exec_commands(commands,dest)	
 	
 def install_mysql(server):
