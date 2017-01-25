@@ -10,11 +10,12 @@
 <body>
   <div class="login-container">
   <div class="login-header">
-    <h1 title="login">Identification</h1>
+    <h1 title="login">Promotional lottery </h1>
     <p title="close">x</p>
   </div>
 
   <div class="login-form">
+    <h1 title="login">Identification</h1><br/>
     {% if I_outofservice|string() == "yes" %}
     <p>Identification server unavailable</p>
     {% elif error|string() != "" %}
@@ -24,12 +25,12 @@
     <p>First name: {{ firstname }}</p>
     <p>Last name: {{ lastname }}</p>
     <p>Email: {{ email }}</p>
-    {% endif %}
+    {% endif %}<br/>
   </div>
 
   <div class="login-form">
-    <br /><br />
     <h1>Service S</h1>
+    <br />
     {% if S_outofservice|string() == "yes" %}
     <p>Status service unavailable</p>
     {% elif hasplayed|string() == "no" %}
@@ -37,13 +38,14 @@
     <br /><br />
     {% else %}
     <p>You have already played at {{ time }}</p>
-    <br /><br />
+    <br />
     {% endif %}
   </div>
 
   <div class="login-form">
     <form action="/play?user_id={{id}}" method="post">
       <h1>Service B</h1>
+      <br />
       {% if B_outofservice|string() == "yes" %}
       <p>Button server unavailable</p>
       {% elif W_outofservice|string() == "yes" %}
@@ -53,13 +55,13 @@
       {% else %}
       <input type="submit" value="Play" disabled/>
       {% endif %}
-      <br /><br />
+      <br />
     </form>
   </div>
 
   <div class="login-form">
-    <br /><br />
     <h1>Service P</h1>
+    <br />
     {% if P_outofservice|string() == "yes" %}
     <p>Picture server unavailable</p>
     {% elif hasplayed|string() == "no" %}
@@ -69,6 +71,7 @@
     {% else %}
     <p>?</p>
     {% endif %}
+    <br />
   </div>
 </div>
 </body>
