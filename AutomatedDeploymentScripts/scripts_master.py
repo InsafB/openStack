@@ -101,5 +101,5 @@ ServicesAndServers = [["b","b.py", "ServerB"],["i","i.py", "ServerI"],["s","s.py
 for SaS in ServicesAndServers:
 	executeService(path_dest + SaS[0],SaS[1], SaS[2])
 	
-commandsM = ["cd ~/openStack-master/TemplateServerM","sudo bash -c 'source ~/openStack-master/"+sys.argv[1]+"; python3 serverM.py&'"]
+commandsM = ["cd ~/openStack-master/TemplateServerM;sudo bash -c 'source ~/openStack-master/"+sys.argv[1]+"; python3 serverM.py&'"]
 exec_commands(commandsM,"ServerMaster")
